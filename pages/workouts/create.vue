@@ -113,12 +113,14 @@ async function generateContent() {
 
   try {
     const workoutTemplates = await $fetch("/workout_templates.json");
-    
+
     // Fetch recent workouts for personalization
     let recentWorkouts = null;
     if (integrationStore.hevyApiKey) {
       try {
-        recentWorkouts = await $fetch(`/api/workouts/recent/${integrationStore.hevyApiKey}`);
+        recentWorkouts = await $fetch(
+          `/api/workouts/recent/${integrationStore.hevyApiKey}`,
+        );
       } catch (error) {
         console.warn("Could not fetch recent workouts:", error);
       }
@@ -129,11 +131,11 @@ async function generateContent() {
     const generationConfig: GenerationConfig = {
       responseMimeType: "text/plain",
     };
-    
-    const recentWorkoutsContext = recentWorkouts 
+
+    const recentWorkoutsContext = recentWorkouts
       ? `\n\nUser's recent workouts for personalization:\n${JSON.stringify(recentWorkouts, null, 2)}`
       : "\n\nNo recent workout data available.";
-    
+
     const systemInstruction: Content = {
       role: "system",
       parts: [
