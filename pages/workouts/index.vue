@@ -6,7 +6,9 @@
     </NuxtLink>
     <BlockHero title="Alle workouts" />
     <p class="text-lg font-bold mb-5">Maak een nieuwe workout aan met AI</p>
-    <NuxtLink to="/workouts/create" class="btn-primary"> Routine aanmaken </NuxtLink>
+    <NuxtLink to="/workouts/create" class="btn-primary">
+      Routine aanmaken
+    </NuxtLink>
     <div class="mb-20 mt-5">
       <div v-if="isLoading" class="text-center py-8">
         <Icon name="line-md:loading-twotone-loop" class="!size-8" />

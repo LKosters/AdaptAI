@@ -43,10 +43,7 @@
       "title": "Walking Lunge",
       "type": "reps_only",
       "primary_muscle_group": "quadriceps",
-      "secondary_muscle_groups": [
-        "glutes",
-        "hamstrings"
-      ],
+      "secondary_muscle_groups": ["glutes", "hamstrings"],
       "equipment": "none",
       "is_custom": false
     },
@@ -55,10 +52,7 @@
       "title": "Walking Lunge (Dumbbell)",
       "type": "short_distance_weight",
       "primary_muscle_group": "quadriceps",
-      "secondary_muscle_groups": [
-        "glutes",
-        "hamstrings"
-      ],
+      "secondary_muscle_groups": ["glutes", "hamstrings"],
       "equipment": "dumbbell",
       "is_custom": false
     },
@@ -121,10 +115,7 @@
       "title": "Zercher Squat",
       "type": "weight_reps",
       "primary_muscle_group": "quadriceps",
-      "secondary_muscle_groups": [
-        "hamstrings",
-        "glutes"
-      ],
+      "secondary_muscle_groups": ["hamstrings", "glutes"],
       "equipment": "barbell",
       "is_custom": false
     },

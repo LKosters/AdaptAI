@@ -112,8 +112,8 @@ async function generateContent() {
   isLoading.value = true;
 
   try {
-    const workoutTemplates = await $fetch('/workout_templates.json');
-    
+    const workoutTemplates = await $fetch("/workout_templates.json");
+
     const { $firebaseApp } = useNuxtApp();
 
     const generationConfig: GenerationConfig = {

@@ -16,10 +16,7 @@
       "title": "Leg Press Horizontal (Machine)",
       "type": "weight_reps",
       "primary_muscle_group": "quadriceps",
-      "secondary_muscle_groups": [
-        "hamstrings",
-        "glutes"
-      ],
+      "secondary_muscle_groups": ["hamstrings", "glutes"],
       "equipment": "machine",
       "is_custom": false
     },
@@ -73,10 +70,7 @@
       "title": "Lunge",
       "type": "reps_only",
       "primary_muscle_group": "quadriceps",
-      "secondary_muscle_groups": [
-        "hamstrings",
-        "glutes"
-      ],
+      "secondary_muscle_groups": ["hamstrings", "glutes"],
       "equipment": "none",
       "is_custom": false
     },
@@ -85,10 +79,7 @@
       "title": "Lunge (Barbell)",
       "type": "weight_reps",
       "primary_muscle_group": "quadriceps",
-      "secondary_muscle_groups": [
-        "hamstrings",
-        "glutes"
-      ],
+      "secondary_muscle_groups": ["hamstrings", "glutes"],
       "equipment": "barbell",
       "is_custom": false
     },
@@ -97,10 +88,7 @@
       "title": "Lunge (Dumbbell)",
       "type": "weight_reps",
       "primary_muscle_group": "quadriceps",
-      "secondary_muscle_groups": [
-        "hamstrings",
-        "glutes"
-      ],
+      "secondary_muscle_groups": ["hamstrings", "glutes"],
       "equipment": "dumbbell",
       "is_custom": false
     },
@@ -208,9 +196,7 @@
       "title": "Nordic Hamstrings Curls",
       "type": "reps_only",
       "primary_muscle_group": "hamstrings",
-      "secondary_muscle_groups": [
-        "glutes"
-      ],
+      "secondary_muscle_groups": ["glutes"],
       "equipment": "none",
       "is_custom": false
     },
@@ -246,10 +232,7 @@
       "title": "Overhead Dumbbell Lunge",
       "type": "weight_reps",
       "primary_muscle_group": "quadriceps",
-      "secondary_muscle_groups": [
-        "hamstrings",
-        "glutes"
-      ],
+      "secondary_muscle_groups": ["hamstrings", "glutes"],
       "equipment": "dumbbell",
       "is_custom": false
     },
@@ -258,9 +241,7 @@
       "title": "Overhead Press (Barbell)",
       "type": "weight_reps",
       "primary_muscle_group": "shoulders",
-      "secondary_muscle_groups": [
-        "triceps"
-      ],
+      "secondary_muscle_groups": ["triceps"],
       "equipment": "barbell",
       "is_custom": false
     },
@@ -269,9 +250,7 @@
       "title": "Overhead Press (Dumbbell)",
       "type": "weight_reps",
       "primary_muscle_group": "shoulders",
-      "secondary_muscle_groups": [
-        "triceps"
-      ],
+      "secondary_muscle_groups": ["triceps"],
       "equipment": "dumbbell",
       "is_custom": false
     },
@@ -280,9 +259,7 @@
       "title": "Overhead Press (Smith Machine)",
       "type": "weight_reps",
       "primary_muscle_group": "shoulders",
-      "secondary_muscle_groups": [
-        "triceps"
-      ],
+      "secondary_muscle_groups": ["triceps"],
       "equipment": "machine",
       "is_custom": false
     },
@@ -318,10 +295,7 @@
       "title": "Pendulum Squat (Machine)",
       "type": "weight_reps",
       "primary_muscle_group": "quadriceps",
-      "secondary_muscle_groups": [
-        "glutes",
-        "calves"
-      ],
+      "secondary_muscle_groups": ["glutes", "calves"],
       "equipment": "machine",
       "is_custom": false
     },
@@ -330,9 +304,7 @@
       "title": "Pike Pushup",
       "type": "reps_only",
       "primary_muscle_group": "triceps",
-      "secondary_muscle_groups": [
-        "shoulders"
-      ],
+      "secondary_muscle_groups": ["shoulders"],
       "equipment": "none",
       "is_custom": false
     },
@@ -359,11 +331,7 @@
       "title": "Pistol Squat",
       "type": "reps_only",
       "primary_muscle_group": "quadriceps",
-      "secondary_muscle_groups": [
-        "hamstrings",
-        "glutes",
-        "calves"
-      ],
+      "secondary_muscle_groups": ["hamstrings", "glutes", "calves"],
       "equipment": "none",
       "is_custom": false
     },
@@ -381,9 +349,7 @@
       "title": "Plank Pushup",
       "type": "reps_only",
       "primary_muscle_group": "chest",
-      "secondary_muscle_groups": [
-        "abdominals"
-      ],
+      "secondary_muscle_groups": ["abdominals"],
       "equipment": "none",
       "is_custom": false
     },
@@ -491,9 +457,7 @@
       "title": "Pullover (Machine)",
       "type": "weight_reps",
       "primary_muscle_group": "chest",
-      "secondary_muscle_groups": [
-        "lats"
-      ],
+      "secondary_muscle_groups": ["lats"],
       "equipment": "machine",
       "is_custom": false
     },
@@ -502,9 +466,7 @@
       "title": "Pull Up",
       "type": "reps_only",
       "primary_muscle_group": "lats",
-      "secondary_muscle_groups": [
-        "upper_back"
-      ],
+      "secondary_muscle_groups": ["upper_back"],
       "equipment": "machine",
       "is_custom": false
     },
@@ -513,9 +475,7 @@
       "title": "Pull Up (Assisted)",
       "type": "bodyweight_assisted",
       "primary_muscle_group": "lats",
-      "secondary_muscle_groups": [
-        "upper_back"
-      ],
+      "secondary_muscle_groups": ["upper_back"],
       "equipment": "machine",
       "is_custom": false
     },
@@ -524,9 +484,7 @@
       "title": "Pull Up (Band)",
       "type": "bodyweight_assisted",
       "primary_muscle_group": "lats",
-      "secondary_muscle_groups": [
-        "upper_back"
-      ],
+      "secondary_muscle_groups": ["upper_back"],
       "equipment": "resistance_band",
       "is_custom": false
     },
@@ -535,9 +493,7 @@
       "title": "Pull Up (Weighted)",
       "type": "bodyweight_weighted",
       "primary_muscle_group": "lats",
-      "secondary_muscle_groups": [
-        "upper_back"
-      ],
+      "secondary_muscle_groups": ["upper_back"],
       "equipment": "machine",
       "is_custom": false
     },
@@ -555,10 +511,7 @@
       "title": "Push Up",
       "type": "reps_only",
       "primary_muscle_group": "chest",
-      "secondary_muscle_groups": [
-        "triceps",
-        "shoulders"
-      ],
+      "secondary_muscle_groups": ["triceps", "shoulders"],
       "equipment": "none",
       "is_custom": false
     },
@@ -567,10 +520,7 @@
       "title": "Push Up - Close Grip",
       "type": "reps_only",
       "primary_muscle_group": "chest",
-      "secondary_muscle_groups": [
-        "triceps",
-        "shoulders"
-      ],
+      "secondary_muscle_groups": ["triceps", "shoulders"],
       "equipment": "none",
       "is_custom": false
     },
@@ -579,10 +529,7 @@
       "title": "Push Up (Weighted)",
       "type": "bodyweight_weighted",
       "primary_muscle_group": "chest",
-      "secondary_muscle_groups": [
-        "triceps",
-        "shoulders"
-      ],
+      "secondary_muscle_groups": ["triceps", "shoulders"],
       "equipment": "none",
       "is_custom": false
     },
@@ -591,11 +538,7 @@
       "title": "Rack Pull",
       "type": "weight_reps",
       "primary_muscle_group": "lower_back",
-      "secondary_muscle_groups": [
-        "glutes",
-        "quadriceps",
-        "hamstrings"
-      ],
+      "secondary_muscle_groups": ["glutes", "quadriceps", "hamstrings"],
       "equipment": "barbell",
       "is_custom": false
     },
@@ -604,9 +547,7 @@
       "title": "Rear Delt Reverse Fly (Cable)",
       "type": "weight_reps",
       "primary_muscle_group": "upper_back",
-      "secondary_muscle_groups": [
-        "shoulders"
-      ],
+      "secondary_muscle_groups": ["shoulders"],
       "equipment": "machine",
       "is_custom": false
     },
@@ -615,9 +556,7 @@
       "title": "Rear Delt Reverse Fly (Dumbbell)",
       "type": "weight_reps",
       "primary_muscle_group": "upper_back",
-      "secondary_muscle_groups": [
-        "shoulders"
-      ],
+      "secondary_muscle_groups": ["shoulders"],
       "equipment": "dumbbell",
       "is_custom": false
     },
@@ -626,9 +565,7 @@
       "title": "Rear Delt Reverse Fly (Machine)",
       "type": "weight_reps",
       "primary_muscle_group": "upper_back",
-      "secondary_muscle_groups": [
-        "shoulders"
-      ],
+      "secondary_muscle_groups": ["shoulders"],
       "equipment": "machine",
       "is_custom": false
     },
@@ -655,9 +592,7 @@
       "title": "Reverse Curl (Barbell)",
       "type": "weight_reps",
       "primary_muscle_group": "biceps",
-      "secondary_muscle_groups": [
-        "forearms"
-      ],
+      "secondary_muscle_groups": ["forearms"],
       "equipment": "barbell",
       "is_custom": false
     },
@@ -675,9 +610,7 @@
       "title": "Reverse Curl (Dumbbell)",
       "type": "weight_reps",
       "primary_muscle_group": "biceps",
-      "secondary_muscle_groups": [
-        "forearms"
-      ],
+      "secondary_muscle_groups": ["forearms"],
       "equipment": "dumbbell",
       "is_custom": false
     },
@@ -686,9 +619,7 @@
       "title": "Reverse Fly Single Arm (Cable)",
       "type": "weight_reps",
       "primary_muscle_group": "upper_back",
-      "secondary_muscle_groups": [
-        "shoulders"
-      ],
+      "secondary_muscle_groups": ["shoulders"],
       "equipment": "machine",
       "is_custom": false
     },
@@ -715,9 +646,7 @@
       "title": "Reverse Hyperextension",
       "type": "weight_reps",
       "primary_muscle_group": "glutes",
-      "secondary_muscle_groups": [
-        "hamstrings"
-      ],
+      "secondary_muscle_groups": ["hamstrings"],
       "equipment": "machine",
       "is_custom": false
     },
@@ -726,10 +655,7 @@
       "title": "Reverse Lunge",
       "type": "reps_only",
       "primary_muscle_group": "quadriceps",
-      "secondary_muscle_groups": [
-        "hamstrings",
-        "glutes"
-      ],
+      "secondary_muscle_groups": ["hamstrings", "glutes"],
       "equipment": "none",
       "is_custom": false
     },
@@ -738,10 +664,7 @@
       "title": "Reverse Lunge (Barbell)",
       "type": "weight_reps",
       "primary_muscle_group": "quadriceps",
-      "secondary_muscle_groups": [
-        "hamstrings",
-        "glutes"
-      ],
+      "secondary_muscle_groups": ["hamstrings", "glutes"],
       "equipment": "barbell",
       "is_custom": false
     },
@@ -750,11 +673,7 @@
       "title": "Reverse Lunge (Dumbbell)",
       "type": "weight_reps",
       "primary_muscle_group": "hamstrings",
-      "secondary_muscle_groups": [
-        "hamstrings",
-        "glutes",
-        "quadriceps"
-      ],
+      "secondary_muscle_groups": ["hamstrings", "glutes", "quadriceps"],
       "equipment": "dumbbell",
       "is_custom": false
     },
@@ -781,9 +700,7 @@
       "title": "Romanian Deadlift (Barbell)",
       "type": "weight_reps",
       "primary_muscle_group": "hamstrings",
-      "secondary_muscle_groups": [
-        "glutes"
-      ],
+      "secondary_muscle_groups": ["glutes"],
       "equipment": "barbell",
       "is_custom": false
     },
@@ -792,9 +709,7 @@
       "title": "Romanian Deadlift (Dumbbell)",
       "type": "weight_reps",
       "primary_muscle_group": "hamstrings",
-      "secondary_muscle_groups": [
-        "glutes"
-      ],
+      "secondary_muscle_groups": ["glutes"],
       "equipment": "dumbbell",
       "is_custom": false
     },
@@ -947,9 +862,7 @@
       "title": "Seated Overhead Press (Barbell)",
       "type": "weight_reps",
       "primary_muscle_group": "shoulders",
-      "secondary_muscle_groups": [
-        "triceps"
-      ],
+      "secondary_muscle_groups": ["triceps"],
       "equipment": "barbell",
       "is_custom": false
     },
@@ -958,9 +871,7 @@
       "title": "Seated Overhead Press (Dumbbell)",
       "type": "weight_reps",
       "primary_muscle_group": "shoulders",
-      "secondary_muscle_groups": [
-        "triceps"
-      ],
+      "secondary_muscle_groups": ["triceps"],
       "equipment": "dumbbell",
       "is_custom": false
     },
@@ -987,9 +898,7 @@
       "title": "Seated Shoulder Press (Machine)",
       "type": "weight_reps",
       "primary_muscle_group": "shoulders",
-      "secondary_muscle_groups": [
-        "triceps"
-      ],
+      "secondary_muscle_groups": ["triceps"],
       "equipment": "machine",
       "is_custom": false
     }
