@@ -9,8 +9,17 @@
     <button @click="generateContent" class="btn-primary mb-5">
         Submit
     </button>
-    <div>
-      {{ result}}
+    <div v-if="workout">
+      {{ workout.routine.title }}
+      <div class="mb-4" v-for="exercise in workout.routine.exercises" :key="exercise.exercise_template_id">
+        {{ exercise.exercise_template_id }}
+        {{ exercise.notes }}
+        <div v-for="set in exercise.sets" :key="set.id">
+          {{ set.exercise_template_id }}
+          {{ set.weight_kg }}
+          {{ set.reps }}
+        </div>
+      </div>
     </div>
     </div>
 
@@ -35,6 +44,7 @@ import { getGenerativeModel, getAI } from "firebase/ai";
 
 const input = ref("");
 const result = ref("");
+const workout = ref("");
 
 async function generateContent() {
   const { $firebaseApp } = useNuxtApp();
@@ -66,5 +76,11 @@ async function generateContent() {
 
   const response = await chat.sendMessage(message.parts);
   result.value = response.response.text();
+
+  // get the json out of the reponse an make a var
+  const json = result.value.match(/```json\n(.*)\n```/s);
+  console.log(json);
+  workout.value = JSON.parse(json[1]);
+  console.log(workout.value);
 }
 </script>
