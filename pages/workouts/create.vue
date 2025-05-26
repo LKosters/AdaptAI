@@ -5,11 +5,16 @@
         <Icon name="line-md:arrow-left" class="!size-5" />
         Alle workouts
       </NuxtLink>
-      <BlockHero title="Workout aanmaken" />
+      <BlockHero title="Routine aanmaken" />
       <p class="text-lg font-bold mb-5">
         Wat voor een workout zou je willen maken?
       </p>
-      <textarea placeholder="Een legday waar je benen van afbreken!" class="input mb-3" type="text" v-model="input" />
+      <textarea
+        placeholder="Een legday waar je benen van afbreken!"
+        class="input mb-3"
+        type="text"
+        v-model="input"
+      />
       <button
         @click="generateContent"
         :class="{ 'opacity-50 pointer-events-none': isLoading }"
@@ -21,6 +26,7 @@
       </button>
       <button
         v-if="workout"
+        @click="saveWorkout"
         :class="{ 'opacity-50 pointer-events-none': isLoading }"
         class="btn-primary mb-5"
         :disabled="isLoading"
@@ -100,11 +106,14 @@ const input = ref("");
 const result = ref("");
 const workout = ref<Workout | null>(null);
 const isLoading = ref(false);
+const integrationStore = useIntegrationStore();
 
 async function generateContent() {
   isLoading.value = true;
 
   try {
+    const workoutTemplates = await $fetch('/workout_templates.json');
+    
     const { $firebaseApp } = useNuxtApp();
 
     const generationConfig: GenerationConfig = {
@@ -114,7 +123,24 @@ async function generateContent() {
       role: "system",
       parts: [
         {
-          text: 'can you create a gym routine for the thing the user has given context/input and based on the json response of the users recent workouts, give me as result a json response that i can import into my app, it must look like this for example:\n\n{ "routine": { "title": "April Leg Day 🔥", "folder_id": null, "notes": "Focus on form over weight. Remember to stretch.", "exercises": [ { "exercise_template_id": "D04AC939", "superset_id": null, "rest_seconds": 90, "notes": "Stay slow and controlled.", "sets": [ { "type": "normal", "weight_kg": 100, "reps": 10, "distance_meters": null, "duration_seconds": null, "custom_metric": null }\n\n]\n\n}\n\n]\n\n}\n\n}',
+          text: `(dont add workouts that have duration only sets and reps) can you create a gym routine for the thing the user has given context/input and based on the json response of the users recent workouts, give me as result a json response that i can import into my app. Use the exercise template IDs from the available workout templates below.
+
+Available workout templates:
+${JSON.stringify(workoutTemplates, null, 2)}
+
+The response must look like this for example:
+
+{ "routine": { "title": "April Leg Day 🔥", "folder_id": null, "notes": "Focus on form over weight. Remember to stretch.", "exercises": [ { "exercise_template_id": "D04AC939", "superset_id": null, "rest_seconds": 90, "notes": "Stay slow and controlled.", "sets": [ { "type": "normal", "weight_kg": 100, "reps": 10, "distance_meters": null, "duration_seconds": null, "custom_metric": null }
+
+]
+
+}
+
+]
+
+}
+
+}`,
         },
       ],
     };
@@ -144,6 +170,31 @@ async function generateContent() {
     }
   } catch (error) {
     console.error("Error generating workout:", error);
+  } finally {
+    isLoading.value = false;
+  }
+}
+
+async function saveWorkout() {
+  if (!workout.value || !integrationStore.hevyApiKey) {
+    console.error("No workout to save or missing API key");
+    return;
+  }
+
+  isLoading.value = true;
+
+  try {
+    const response = await $fetch(
+      `/api/workouts/create/${integrationStore.hevyApiKey}`,
+      {
+        method: "POST",
+        body: workout.value,
+      },
+    );
+
+    console.log("Workout saved successfully:", response);
+  } catch (error) {
+    console.error("Error saving workout:", error);
   } finally {
     isLoading.value = false;
   }

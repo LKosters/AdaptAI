@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     }
 
     const response = await $fetch(
-      `${config.hevyAPIEndpoint}workouts?page=1&pageSize=5&apiKey=${apiKey}`,
+      `${config.hevyAPIEndpoint}workouts?page=1&pageSize=10&apiKey=${apiKey}`,
       {
         retry: 1,
         timeout: 5000,

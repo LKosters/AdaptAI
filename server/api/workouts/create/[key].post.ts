@@ -3,13 +3,13 @@ export default defineEventHandler(async (event) => {
   const apiKey = getRouterParam(event, "key");
   const body = await readBody(event);
 
-  const response = await $fetch(`${config.hevyAPIEndpoint}routines`, {
-    method: "POST",
-    header: {
-      "api-key": apiKey,
+  const response = await $fetch(
+    `${config.hevyAPIEndpoint}routines?apiKey=${apiKey}`,
+    {
+      method: "POST",
+      body: body,
     },
-    body: body,
-  });
+  );
 
   return response;
 });

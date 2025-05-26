@@ -8,7 +8,12 @@
     <p class="text-lg font-bold mb-5">
       Vul hier je Hevy API key in als je de integratie wilt gebruiken.
     </p>
-    <input placeholder="API key" class="input !h-max mb-3" type="text" v-model="input" />
+    <input
+      placeholder="API key"
+      class="input !h-max mb-3"
+      type="text"
+      v-model="input"
+    />
     <button
       @click="invoke()"
       :class="{ 'opacity-50 pointer-events-none': isLoading }"
@@ -28,7 +33,15 @@
 </template>
 
 <script lang="ts" setup>
-import { collection, addDoc, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
 
 const { userId } = useAuth();
 const integrationStore = useIntegrationStore();
@@ -40,9 +53,13 @@ const successMessage = ref("");
 const errorMessage = ref("");
 const existingDocId = ref("");
 
-watch(() => integrationStore.hevyApiKey, (newApiKey) => {
-  input.value = newApiKey;
-}, { immediate: true });
+watch(
+  () => integrationStore.hevyApiKey,
+  (newApiKey) => {
+    input.value = newApiKey;
+  },
+  { immediate: true },
+);
 
 async function fetchExistingApiKey() {
   if (!userId.value) return;
@@ -51,11 +68,11 @@ async function fetchExistingApiKey() {
     const firebase = nuxtApp.$firebase as any;
     const q = query(
       collection(firebase.db, "Integration"),
-      where("userId", "==", userId.value)
+      where("userId", "==", userId.value),
     );
-    
+
     const querySnapshot = await getDocs(q);
-    
+
     if (!querySnapshot.empty) {
       const doc = querySnapshot.docs[0];
       existingDocId.value = doc.id;
@@ -100,7 +117,10 @@ async function invoke() {
         createdAt: new Date(),
       };
 
-      const docRef = await addDoc(collection(firebase.db, "Integration"), integrationData);
+      const docRef = await addDoc(
+        collection(firebase.db, "Integration"),
+        integrationData,
+      );
       existingDocId.value = docRef.id;
       successMessage.value = "API key succesvol toegevoegd!";
     }
@@ -108,7 +128,8 @@ async function invoke() {
     integrationStore.setHevyApiKey(input.value.trim());
   } catch (error) {
     console.error("Error saving API key:", error);
-    errorMessage.value = "Er is een fout opgetreden bij het opslaan van de API key";
+    errorMessage.value =
+      "Er is een fout opgetreden bij het opslaan van de API key";
   } finally {
     isLoading.value = false;
   }

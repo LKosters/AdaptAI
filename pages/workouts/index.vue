@@ -6,22 +6,28 @@
     </NuxtLink>
     <BlockHero title="Alle workouts" />
     <p class="text-lg font-bold mb-5">Maak een nieuwe workout aan met AI</p>
-    <NuxtLink to="/workouts/create" class="btn-primary"> Aanmaken </NuxtLink>
+    <NuxtLink to="/workouts/create" class="btn-primary"> Routine aanmaken </NuxtLink>
     <div class="mb-20 mt-5">
       <div v-if="isLoading" class="text-center py-8">
         <Icon name="line-md:loading-twotone-loop" class="!size-8" />
         <p class="mt-2">Workouts laden...</p>
       </div>
       <div v-else-if="!integrationStore.hevyApiKey" class="text-center py-8">
-        <p class="text-gray-400">Voeg eerst een Hevy API key toe in de instellingen om je workouts te zien.</p>
+        <p class="text-gray-400">
+          Voeg eerst een Hevy API key toe in de instellingen om je workouts te
+          zien.
+        </p>
       </div>
-      <div v-else-if="allWorkouts?.data?.workouts?.length === 0" class="text-center py-8">
+      <div
+        v-else-if="allWorkouts?.data?.workouts?.length === 0"
+        class="text-center py-8"
+      >
         <p class="text-gray-400">Geen workouts gevonden.</p>
       </div>
       <div
         v-else
         class="mb-4 bg-[#282828]/70 p-4 rounded-[20px]"
-        v-for="workout in allWorkouts.workouts"
+        v-for="workout in allWorkouts?.workouts"
         :key="workout.id"
       >
         <p class="font-bold mb-2">{{ workout.title }}</p>
@@ -74,9 +80,11 @@ const fetchWorkouts = async () => {
 
   isLoading.value = true;
   try {
-    const data = await $fetch(`/api/workouts/recent/${integrationStore.hevyApiKey}`);
+    const data = await $fetch(
+      `/api/workouts/recent/${integrationStore.hevyApiKey}`,
+    );
     allWorkouts.value = data as WorkoutResponse;
-    console.log('Fetched workouts:', data);
+    console.log("Fetched workouts:", data);
   } catch (error) {
     console.error("Error fetching workouts:", error);
     allWorkouts.value = null;
@@ -85,14 +93,18 @@ const fetchWorkouts = async () => {
   }
 };
 
-watch(() => integrationStore.hevyApiKey, async (newApiKey) => {
-  console.log('API key changed:', newApiKey);
-  if (newApiKey) {
-    await fetchWorkouts();
-  } else {
-    allWorkouts.value = null;
-  }
-}, { immediate: true });
+watch(
+  () => integrationStore.hevyApiKey,
+  async (newApiKey) => {
+    console.log("API key changed:", newApiKey);
+    if (newApiKey) {
+      await fetchWorkouts();
+    } else {
+      allWorkouts.value = null;
+    }
+  },
+  { immediate: true },
+);
 
 function calculateDuration(startTime: string, endTime: string): string {
   const start = new Date(startTime);

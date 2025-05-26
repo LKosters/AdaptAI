@@ -7,6 +7,9 @@ Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduct
 Make sure to install dependencies:
 
 ```bash
+# Merge template files
+cd /Users/laurenskosters/PhpstormProjects/adaptai && python3 merge_templates.py
+
 # npm
 npm install
 

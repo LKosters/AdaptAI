@@ -55,11 +55,15 @@ const integrationStore = useIntegrationStore();
 
 const isLoggedIn = computed(() => isSignedIn.value);
 
-watch([isLoggedIn, userId], async ([newIsLoggedIn, newUserId]) => {
-  if (newIsLoggedIn && newUserId) {
-    await integrationStore.fetchHevyApiKey(newUserId);
-  } else {
-    integrationStore.clearHevyApiKey();
-  }
-}, { immediate: true });
+watch(
+  [isLoggedIn, userId],
+  async ([newIsLoggedIn, newUserId]) => {
+    if (newIsLoggedIn && newUserId) {
+      await integrationStore.fetchHevyApiKey(newUserId);
+    } else {
+      integrationStore.clearHevyApiKey();
+    }
+  },
+  { immediate: true },
+);
 </script>

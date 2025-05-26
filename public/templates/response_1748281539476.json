@@ -1,0 +1,141 @@
+{
+  "page": 5,
+  "page_count": 5,
+  "exercise_templates": [
+    {
+      "id": "286C1D0B",
+      "title": "Upright Row (Cable)",
+      "type": "weight_reps",
+      "primary_muscle_group": "shoulders",
+      "secondary_muscle_groups": [],
+      "equipment": "machine",
+      "is_custom": false
+    },
+    {
+      "id": "797F0782",
+      "title": "Upright Row (Dumbbell)",
+      "type": "weight_reps",
+      "primary_muscle_group": "shoulders",
+      "secondary_muscle_groups": [],
+      "equipment": "dumbbell",
+      "is_custom": false
+    },
+    {
+      "id": "6BE68B62",
+      "title": "V Up",
+      "type": "reps_only",
+      "primary_muscle_group": "abdominals",
+      "secondary_muscle_groups": [],
+      "equipment": "none",
+      "is_custom": false
+    },
+    {
+      "id": "33EDD7DB",
+      "title": "Walking",
+      "type": "distance_duration",
+      "primary_muscle_group": "cardio",
+      "secondary_muscle_groups": [],
+      "equipment": "none",
+      "is_custom": false
+    },
+    {
+      "id": "32HKJ34K",
+      "title": "Walking Lunge",
+      "type": "reps_only",
+      "primary_muscle_group": "quadriceps",
+      "secondary_muscle_groups": [
+        "glutes",
+        "hamstrings"
+      ],
+      "equipment": "none",
+      "is_custom": false
+    },
+    {
+      "id": "A733CC5B",
+      "title": "Walking Lunge (Dumbbell)",
+      "type": "short_distance_weight",
+      "primary_muscle_group": "quadriceps",
+      "secondary_muscle_groups": [
+        "glutes",
+        "hamstrings"
+      ],
+      "equipment": "dumbbell",
+      "is_custom": false
+    },
+    {
+      "id": "A1F47ACC",
+      "title": "Wall Ball",
+      "type": "weight_reps",
+      "primary_muscle_group": "full_body",
+      "secondary_muscle_groups": [],
+      "equipment": "other",
+      "is_custom": false
+    },
+    {
+      "id": "C8706C80",
+      "title": "Wall Sit",
+      "type": "duration",
+      "primary_muscle_group": "quadriceps",
+      "secondary_muscle_groups": [],
+      "equipment": "other",
+      "is_custom": false
+    },
+    {
+      "id": "79EF4E4F",
+      "title": "Warm Up",
+      "type": "duration",
+      "primary_muscle_group": "full_body",
+      "secondary_muscle_groups": [],
+      "equipment": "none",
+      "is_custom": false
+    },
+    {
+      "id": "7C50F118",
+      "title": "Wide Pull Up",
+      "type": "reps_only",
+      "primary_muscle_group": "lats",
+      "secondary_muscle_groups": [],
+      "equipment": "machine",
+      "is_custom": false
+    },
+    {
+      "id": "0E4523F4",
+      "title": "Wrist Roller",
+      "type": "weight_reps",
+      "primary_muscle_group": "forearms",
+      "secondary_muscle_groups": [],
+      "equipment": "machine",
+      "is_custom": false
+    },
+    {
+      "id": "8C9D2928",
+      "title": "Yoga",
+      "type": "duration",
+      "primary_muscle_group": "full_body",
+      "secondary_muscle_groups": [],
+      "equipment": "none",
+      "is_custom": false
+    },
+    {
+      "id": "40C6A9FC",
+      "title": "Zercher Squat",
+      "type": "weight_reps",
+      "primary_muscle_group": "quadriceps",
+      "secondary_muscle_groups": [
+        "hamstrings",
+        "glutes"
+      ],
+      "equipment": "barbell",
+      "is_custom": false
+    },
+    {
+      "id": "123EE239",
+      "title": "Zottman Curl (Dumbbell)",
+      "type": "weight_reps",
+      "primary_muscle_group": "biceps",
+      "secondary_muscle_groups": [],
+      "equipment": "dumbbell",
+      "is_custom": false
+    }
+  ]
+}
