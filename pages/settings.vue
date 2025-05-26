@@ -31,6 +31,7 @@
 import { collection, addDoc, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
 
 const { userId } = useAuth();
+const integrationStore = useIntegrationStore();
 const nuxtApp = useNuxtApp();
 
 const input = ref("");
@@ -38,6 +39,10 @@ const isLoading = ref(false);
 const successMessage = ref("");
 const errorMessage = ref("");
 const existingDocId = ref("");
+
+watch(() => integrationStore.hevyApiKey, (newApiKey) => {
+  input.value = newApiKey;
+}, { immediate: true });
 
 async function fetchExistingApiKey() {
   if (!userId.value) return;
@@ -53,8 +58,6 @@ async function fetchExistingApiKey() {
     
     if (!querySnapshot.empty) {
       const doc = querySnapshot.docs[0];
-      const data = doc.data();
-      input.value = data.hevyApiKey || "";
       existingDocId.value = doc.id;
     }
   } catch (error) {
@@ -101,6 +104,8 @@ async function invoke() {
       existingDocId.value = docRef.id;
       successMessage.value = "API key succesvol toegevoegd!";
     }
+
+    integrationStore.setHevyApiKey(input.value.trim());
   } catch (error) {
     console.error("Error saving API key:", error);
     errorMessage.value = "Er is een fout opgetreden bij het opslaan van de API key";

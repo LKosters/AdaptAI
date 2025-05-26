@@ -9,7 +9,7 @@
       <p class="text-lg font-bold mb-5">
         Wat voor een workout zou je willen maken?
       </p>
-      <textarea class="input mb-3" type="text" v-model="input" />
+      <textarea placeholder="Een legday waar je benen van afbreken!" class="input mb-3" type="text" v-model="input" />
       <button
         @click="generateContent"
         :class="{ 'opacity-50 pointer-events-none': isLoading }"
@@ -18,6 +18,15 @@
       >
         <Icon v-if="isLoading" name="line-md:loading-twotone-loop" />
         <span v-else>Submit</span>
+      </button>
+      <button
+        v-if="workout"
+        :class="{ 'opacity-50 pointer-events-none': isLoading }"
+        class="btn-primary mb-5"
+        :disabled="isLoading"
+      >
+        <Icon v-if="isLoading" name="line-md:loading-twotone-loop" />
+        <span v-else>Workout opslaan</span>
       </button>
       <div class="mb-20" v-if="workout">
         <p class="font-bold text-lg mb-5">{{ workout.routine.title }}</p>

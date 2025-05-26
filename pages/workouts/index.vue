@@ -8,9 +8,20 @@
     <p class="text-lg font-bold mb-5">Maak een nieuwe workout aan met AI</p>
     <NuxtLink to="/workouts/create" class="btn-primary"> Aanmaken </NuxtLink>
     <div class="mb-20 mt-5">
+      <div v-if="isLoading" class="text-center py-8">
+        <Icon name="line-md:loading-twotone-loop" class="!size-8" />
+        <p class="mt-2">Workouts laden...</p>
+      </div>
+      <div v-else-if="!integrationStore.hevyApiKey" class="text-center py-8">
+        <p class="text-gray-400">Voeg eerst een Hevy API key toe in de instellingen om je workouts te zien.</p>
+      </div>
+      <div v-else-if="allWorkouts?.data?.workouts?.length === 0" class="text-center py-8">
+        <p class="text-gray-400">Geen workouts gevonden.</p>
+      </div>
       <div
+        v-else
         class="mb-4 bg-[#282828]/70 p-4 rounded-[20px]"
-        v-for="workout in allWorkouts?.workouts"
+        v-for="workout in allWorkouts.workouts"
         :key="workout.id"
       >
         <p class="font-bold mb-2">{{ workout.title }}</p>
@@ -35,6 +46,7 @@
 
 <script lang="ts" setup>
 const { formatDate, isToday, formatDateRange } = useFormatDate();
+const integrationStore = useIntegrationStore();
 
 interface Workout {
   id: string;
@@ -42,6 +54,7 @@ interface Workout {
   description?: string;
   start_time?: string;
   end_time?: string;
+  created_at?: string;
 }
 
 interface WorkoutResponse {
@@ -51,9 +64,35 @@ interface WorkoutResponse {
 }
 
 const allWorkouts = ref<WorkoutResponse | null>(null);
+const isLoading = ref(false);
 
-const { data } = await useFetch("/api/workouts/recent/");
-allWorkouts.value = data.value as WorkoutResponse;
+const fetchWorkouts = async () => {
+  if (!integrationStore.hevyApiKey) {
+    allWorkouts.value = null;
+    return;
+  }
+
+  isLoading.value = true;
+  try {
+    const data = await $fetch(`/api/workouts/recent/${integrationStore.hevyApiKey}`);
+    allWorkouts.value = data as WorkoutResponse;
+    console.log('Fetched workouts:', data);
+  } catch (error) {
+    console.error("Error fetching workouts:", error);
+    allWorkouts.value = null;
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+watch(() => integrationStore.hevyApiKey, async (newApiKey) => {
+  console.log('API key changed:', newApiKey);
+  if (newApiKey) {
+    await fetchWorkouts();
+  } else {
+    allWorkouts.value = null;
+  }
+}, { immediate: true });
 
 function calculateDuration(startTime: string, endTime: string): string {
   const start = new Date(startTime);

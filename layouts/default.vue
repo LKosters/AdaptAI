@@ -50,6 +50,16 @@
 </template>
 
 <script lang="ts" setup>
-const { isSignedIn } = useAuth();
+const { isSignedIn, userId } = useAuth();
+const integrationStore = useIntegrationStore();
+
 const isLoggedIn = computed(() => isSignedIn.value);
+
+watch([isLoggedIn, userId], async ([newIsLoggedIn, newUserId]) => {
+  if (newIsLoggedIn && newUserId) {
+    await integrationStore.fetchHevyApiKey(newUserId);
+  } else {
+    integrationStore.clearHevyApiKey();
+  }
+}, { immediate: true });
 </script>
