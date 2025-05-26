@@ -11,7 +11,7 @@
       </template>
     </div>
     <svg
-      class="fixed top-0 left-0 w-full h-full translate-y-[70%] -z-10"
+      class="fixed top-0 left-0 w-full h-full -z-10 animate-pulse-slow"
       width="1920"
       height="3414"
       viewBox="0 0 1920 3414"
@@ -67,3 +67,36 @@ watch(
   { immediate: true },
 );
 </script>
+
+<style scoped>
+.animate-pulse-slow {
+  animation: pulse-slow 30s ease-in-out infinite;
+}
+
+@keyframes pulse-slow {
+  0% {
+    transform: translateY(70%) scale(1);
+  }
+  15% {
+    transform: translateY(70%) scale(1.08);
+  }
+  30% {
+    transform: translateY(70%) scale(0.95);
+  }
+  45% {
+    transform: translateY(70%) scale(1.12);
+  }
+  60% {
+    transform: translateY(70%) scale(1.03);
+  }
+  75% {
+    transform: translateY(70%) scale(0.98);
+  }
+  90% {
+    transform: translateY(70%) scale(1.06);
+  }
+  100% {
+    transform: translateY(70%) scale(1);
+  }
+}
+</style>
