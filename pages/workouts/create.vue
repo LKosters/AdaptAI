@@ -138,24 +138,51 @@ async function generateContent() {
       role: "system",
       parts: [
         {
-          text: `(dont add workouts that have duration only sets and reps) can you create a gym routine for the thing the user has given context/input and based on the json response of the users recent workouts, give me as result a json response that i can import into my app. Use the exercise template IDs from the available workout templates below.
+          text: `You are a fitness expert creating gym routines. Create a workout routine based on the user's input and their recent workout history for personalization.
+
+IMPORTANT: You MUST only use exercise template IDs that exist in the provided workout templates data. Each exercise template has an "id" field - use ONLY these exact IDs.
 
 Available workout templates:
 ${JSON.stringify(workoutTemplates, null, 2)}${recentWorkoutsContext}
 
-The response must look like this for example:
+Rules:
+1. ONLY use exercise template IDs from the "exercise_templates" array above
+2. Do NOT create exercises with duration-only sets if the exercise type is "weight_reps" or "reps_only"
+3. Match exercise types correctly:
+   - "weight_reps": use weight_kg and reps
+   - "reps_only": use only reps (set weight_kg to 0)
+   - "duration": use duration_seconds only
+   - "bodyweight_weighted": can use weight_kg and reps
 
-{ "routine": { "title": "April Leg Day 🔥", "folder_id": null, "notes": "Focus on form over weight. Remember to stretch.", "exercises": [ { "exercise_template_id": "D04AC939", "superset_id": null, "rest_seconds": 90, "notes": "Stay slow and controlled.", "sets": [ { "type": "normal", "weight_kg": 100, "reps": 10, "distance_meters": null, "duration_seconds": null, "custom_metric": null }
+The response must be valid JSON in this exact format:
 
-]
-
+{
+  "routine": {
+    "title": "Workout Title",
+    "folder_id": null,
+    "notes": "Workout description and tips",
+    "exercises": [
+      {
+        "exercise_template_id": "VALID_ID_FROM_TEMPLATES",
+        "superset_id": null,
+        "rest_seconds": 90,
+        "notes": "Exercise-specific notes",
+        "sets": [
+          {
+            "type": "normal",
+            "weight_kg": 100,
+            "reps": 10,
+            "distance_meters": null,
+            "duration_seconds": null,
+            "custom_metric": null
+          }
+        ]
+      }
+    ]
+  }
 }
 
-]
-
-}
-
-}`,
+Verify each exercise_template_id exists in the provided templates before including it.`,
         },
       ],
     };
