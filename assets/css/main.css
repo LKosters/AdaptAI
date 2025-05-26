@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+@theme {
+  --color-primary: #f47816;
+}
+
+body {
+  @apply bg-black text-white max-w-[402px] block mx-auto;
+}

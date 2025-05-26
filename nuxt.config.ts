@@ -8,9 +8,7 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
   modules: ["@nuxt/fonts", "@nuxt/image", "@nuxt/icon"],
-  plugins: [
-    { src: '~/plugins/firebase.client.js', mode: 'client' }
-  ],
+  plugins: [{ src: "~/plugins/firebase.client.js", mode: "client" }],
   runtimeConfig: {
     hevyAPIEndpoint: process.env.HEVY_API_ENDPOINT,
   },
