@@ -5,35 +5,40 @@
         <Icon name="line-md:arrow-left" class="!size-5" />
         Alle workouts
       </NuxtLink>
-    <BlockHero title="Workout aanmaken" />
-    <p class="text-lg font-bold mb-5">
-      Wat voor een workout zou je willen maken?
-    </p>
-    <textarea class="input mb-3" type="text" v-model="input" />
-    <button @click="generateContent" :class="{ 'opacity-50 pointer-events-none': isLoading }" class="btn-primary mb-5" :disabled="isLoading">
+      <BlockHero title="Workout aanmaken" />
+      <p class="text-lg font-bold mb-5">
+        Wat voor een workout zou je willen maken?
+      </p>
+      <textarea class="input mb-3" type="text" v-model="input" />
+      <button
+        @click="generateContent"
+        :class="{ 'opacity-50 pointer-events-none': isLoading }"
+        class="btn-primary mb-5"
+        :disabled="isLoading"
+      >
         <Icon v-if="isLoading" name="line-md:loading-twotone-loop" />
         <span v-else>Submit</span>
-    </button>
-    <div class="mb-20" v-if="workout">
-      <p class="font-bold text-lg mb-5">{{ workout.routine.title }}</p>
-      <div class="mb-4 bg-[#282828]/70 p-4 rounded-[20px]" v-for="exercise in workout.routine.exercises" :key="exercise.exercise_template_id">
-        <p class="font-bold mb-2">{{ exercise.exercise_template_id }}</p>
-        <p class="mb-2">{{ exercise.notes }}</p>
-        <div>
-          <p v-for="set in exercise.sets" :key="set.id">
-            <span v-if="set.weight_kg || set.reps">
-              {{ set.weight_kg }}KG - 
-              {{ set.reps }} reps
-            </span>
-            <span v-else>
-              {{ set.duration_seconds }} seconds
-            </span>
-          </p>
+      </button>
+      <div class="mb-20" v-if="workout">
+        <p class="font-bold text-lg mb-5">{{ workout.routine.title }}</p>
+        <div
+          class="mb-4 bg-[#282828]/70 p-4 rounded-[20px]"
+          v-for="exercise in workout.routine.exercises"
+          :key="exercise.exercise_template_id"
+        >
+          <p class="font-bold mb-2">{{ exercise.exercise_template_id }}</p>
+          <p class="mb-2">{{ exercise.notes }}</p>
+          <div>
+            <p v-for="set in exercise.sets" :key="set.id">
+              <span v-if="set.weight_kg || set.reps">
+                {{ set.weight_kg }}KG - {{ set.reps }} reps
+              </span>
+              <span v-else> {{ set.duration_seconds }} seconds </span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
-    </div>
-
   </div>
 </template>
 
@@ -89,7 +94,7 @@ const isLoading = ref(false);
 
 async function generateContent() {
   isLoading.value = true;
-  
+
   try {
     const { $firebaseApp } = useNuxtApp();
 
@@ -123,13 +128,13 @@ async function generateContent() {
 
     const json = result.value.match(/```json\n(.*)\n```/s);
     console.log(json);
-    
+
     if (json && json[1]) {
       workout.value = JSON.parse(json[1]);
       console.log(workout.value);
     }
   } catch (error) {
-    console.error('Error generating workout:', error);
+    console.error("Error generating workout:", error);
   } finally {
     isLoading.value = false;
   }

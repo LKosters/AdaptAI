@@ -11,6 +11,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@clerk/nuxt": "^1.6.7",
     "@firebase/ai": "^1.3.0",
     "@iconify-json/line-md": "^1.2.8",
     "@nuxt/fonts": "^0.11.4",

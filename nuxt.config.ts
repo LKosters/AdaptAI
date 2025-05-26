@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  modules: ["@nuxt/fonts", "@nuxt/image", "@nuxt/icon"],
+  modules: ["@nuxt/fonts", "@nuxt/image", "@nuxt/icon", "@clerk/nuxt"],
   icon: {
     serverBundle: {
       collections: ["line-md"],
