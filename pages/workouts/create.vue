@@ -113,12 +113,27 @@ async function generateContent() {
 
   try {
     const workoutTemplates = await $fetch("/workout_templates.json");
+    
+    // Fetch recent workouts for personalization
+    let recentWorkouts = null;
+    if (integrationStore.hevyApiKey) {
+      try {
+        recentWorkouts = await $fetch(`/api/workouts/recent/${integrationStore.hevyApiKey}`);
+      } catch (error) {
+        console.warn("Could not fetch recent workouts:", error);
+      }
+    }
 
     const { $firebaseApp } = useNuxtApp();
 
     const generationConfig: GenerationConfig = {
       responseMimeType: "text/plain",
     };
+    
+    const recentWorkoutsContext = recentWorkouts 
+      ? `\n\nUser's recent workouts for personalization:\n${JSON.stringify(recentWorkouts, null, 2)}`
+      : "\n\nNo recent workout data available.";
+    
     const systemInstruction: Content = {
       role: "system",
       parts: [
@@ -126,7 +141,7 @@ async function generateContent() {
           text: `(dont add workouts that have duration only sets and reps) can you create a gym routine for the thing the user has given context/input and based on the json response of the users recent workouts, give me as result a json response that i can import into my app. Use the exercise template IDs from the available workout templates below.
 
 Available workout templates:
-${JSON.stringify(workoutTemplates, null, 2)}
+${JSON.stringify(workoutTemplates, null, 2)}${recentWorkoutsContext}
 
 The response must look like this for example:
 
