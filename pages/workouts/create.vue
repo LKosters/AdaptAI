@@ -1,9 +1,19 @@
 <template>
   <div>
-    <h1>Create Workout</h1>
-    <input type="text" v-model="input" />
-    <button @click="generateContent">Generate</button>
-    <pre>{{ result }}</pre>
+    <div>
+    <BlockHero title="Workout aanmaken" />
+    <p class="text-lg font-bold mb-5">
+      Wat voor een workout zou je willen maken?
+    </p>
+    <textarea class="input mb-3" type="text" v-model="input" />
+    <button @click="generateContent" class="btn-primary mb-5">
+        Submit
+    </button>
+    <div>
+      {{ result}}
+    </div>
+    </div>
+
   </div>
 </template>
 

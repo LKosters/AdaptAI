@@ -1,9 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #f47816;
+  --color-primary: #F47816;
 }
 
 body {
   @apply bg-black text-white max-w-[402px] block mx-auto;
+  font-family: "Noto Sans Mono", sans-serif;
+}
+
+.btn-primary {
+  @apply bg-primary text-black w-full block text-center px-4 py-2 rounded-[20px] font-bold;
+}
+
+.input {
+  @apply bg-[#282828]/70 h-[103px] border-white border text-white w-full block px-4 py-2 rounded-[20px] font-bold;
 }
