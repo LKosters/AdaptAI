@@ -1,4 +1,3 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
@@ -9,4 +8,10 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
   modules: ["@nuxt/fonts", "@nuxt/image", "@nuxt/icon"],
+  plugins: [
+    { src: '~/plugins/firebase.client.js', mode: 'client' }
+  ],
+  runtimeConfig: {
+    hevyAPIEndpoint: process.env.HEVY_API_ENDPOINT,
+  },
 });
