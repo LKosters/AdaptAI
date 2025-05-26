@@ -21,7 +21,7 @@
         </p>
       </div>
       <div
-        v-else-if="allWorkouts?.data?.workouts?.length === 0"
+        v-else-if="allWorkouts?.workouts?.length === 0"
         class="text-center py-8"
       >
         <p class="text-gray-400">Geen workouts gevonden.</p>
@@ -55,58 +55,16 @@
 <script lang="ts" setup>
 const { formatDate, isToday, formatDateRange } = useFormatDate();
 const integrationStore = useIntegrationStore();
+const workoutsStore = useWorkoutsStore();
 
-interface Workout {
-  id: string;
-  title: string;
-  description?: string;
-  start_time?: string;
-  end_time?: string;
-  created_at?: string;
-}
+// Use the store's data and loading state
+const allWorkouts = computed(() => workoutsStore.recentWorkouts);
+const isLoading = computed(() => workoutsStore.isLoading);
 
-interface WorkoutResponse {
-  data: {
-    workouts: Workout[];
-  };
-}
-
-const allWorkouts = ref<WorkoutResponse | null>(null);
-const isLoading = ref(false);
-
-const fetchWorkouts = async () => {
-  if (!integrationStore.hevyApiKey) {
-    allWorkouts.value = null;
-    return;
-  }
-
-  isLoading.value = true;
-  try {
-    const data = await $fetch(
-      `/api/workouts/recent/${integrationStore.hevyApiKey}`,
-    );
-    allWorkouts.value = data as WorkoutResponse;
-    console.log("Fetched workouts:", data);
-  } catch (error) {
-    console.error("Error fetching workouts:", error);
-    allWorkouts.value = null;
-  } finally {
-    isLoading.value = false;
-  }
-};
-
-watch(
-  () => integrationStore.hevyApiKey,
-  async (newApiKey) => {
-    console.log("API key changed:", newApiKey);
-    if (newApiKey) {
-      await fetchWorkouts();
-    } else {
-      allWorkouts.value = null;
-    }
-  },
-  { immediate: true },
-);
+// Fetch workouts on mount
+onMounted(() => {
+  workoutsStore.fetchRecentWorkouts();
+});
 
 function calculateDuration(startTime: string, endTime: string): string {
   const start = new Date(startTime);

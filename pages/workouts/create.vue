@@ -41,7 +41,7 @@
           v-for="exercise in workout.routine.exercises"
           :key="exercise.exercise_template_id"
         >
-          <p class="font-bold mb-2">{{ exercise.exercise_template_id }}</p>
+          <p class="font-bold mb-2">{{ getExerciseName(exercise.exercise_template_id) }}</p>
           <p class="mb-2">{{ exercise.notes }}</p>
           <div>
             <p v-for="set in exercise.sets" :key="set.id">
@@ -102,11 +102,60 @@ interface Workout {
   routine: WorkoutRoutine;
 }
 
+interface ExerciseTemplate {
+  id: string;
+  title: string;
+  type: string;
+  primary_muscle_group: string;
+  secondary_muscle_groups: string[];
+  equipment: string;
+  is_custom: boolean;
+}
+
+interface WorkoutTemplatesData {
+  exercise_templates: ExerciseTemplate[];
+}
+
 const input = ref("");
 const result = ref("");
 const workout = ref<Workout | null>(null);
 const isLoading = ref(false);
 const integrationStore = useIntegrationStore();
+const workoutsStore = useWorkoutsStore();
+
+const workoutTemplates = ref<WorkoutTemplatesData | null>(null);
+const exerciseTemplatesMap = ref<Record<string, string>>({});
+
+onMounted(async () => {
+  try {
+    workoutTemplates.value = await $fetch("/workout_templates.json");
+  } catch (error) {
+    console.error("Error loading workout templates:", error);
+  }
+});
+
+async function loadExerciseTemplates() {
+  try {
+    const templates = await $fetch("/workout_templates.json") as any;
+    const map: Record<string, string> = {};
+    templates.exercise_templates?.forEach((template: any) => {
+      map[template.id] = template.title;
+    });
+    exerciseTemplatesMap.value = map;
+  } catch (error) {
+    console.error("Error loading exercise templates:", error);
+  }
+}
+
+function getExerciseName(exerciseTemplateId: string): string {
+  return exerciseTemplatesMap.value[exerciseTemplateId] || exerciseTemplateId;
+}
+
+watch(workout, async (newWorkout) => {
+  if (newWorkout && Object.keys(exerciseTemplatesMap.value).length === 0) {
+    await loadExerciseTemplates();
+  }
+});
 
 async function generateContent() {
   isLoading.value = true;
@@ -114,17 +163,11 @@ async function generateContent() {
   try {
     const workoutTemplates = await $fetch("/workout_templates.json");
 
-    // Fetch recent workouts for personalization
-    let recentWorkouts = null;
-    if (integrationStore.hevyApiKey) {
-      try {
-        recentWorkouts = await $fetch(
-          `/api/workouts/recent/${integrationStore.hevyApiKey}`,
-        );
-      } catch (error) {
-        console.warn("Could not fetch recent workouts:", error);
-      }
-    }
+    // Use the store's cached workouts for personalization
+    await workoutsStore.fetchRecentWorkouts();
+    const recentWorkouts = workoutsStore.recentWorkouts;
+
+    console.log("recentWorkouts", recentWorkouts);
 
     const { $firebaseApp } = useNuxtApp();
 

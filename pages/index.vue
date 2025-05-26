@@ -105,45 +105,24 @@ const welcomeMessage = computed(() => {
 
 const { formatDate, isToday, formatDateRange } = useFormatDate();
 const integrationStore = useIntegrationStore();
+const workoutsStore = useWorkoutsStore();
 
-interface Workout {
-  id: string;
-  title: string;
-  description?: string;
-  start_time?: string;
-  end_time?: string;
-  created_at?: string;
-}
-
-interface WorkoutResponse {
-  workouts: Workout[];
-}
-
-const allWorkouts = ref<WorkoutResponse | null>(null);
-const isLoading = ref(false);
 const chartCanvas = ref<HTMLCanvasElement | null>(null);
 let chart: any = null;
 
-const fetchWorkouts = async () => {
-  if (!integrationStore.hevyApiKey) {
-    allWorkouts.value = null;
-    return;
-  }
+// Use the store's data and loading state
+const allWorkouts = computed(() => workoutsStore.recentWorkouts);
+const isLoading = computed(() => workoutsStore.isLoading);
 
-  isLoading.value = true;
-  try {
-    const data = await $fetch(
-      `/api/workouts/recent/${integrationStore.hevyApiKey}`,
-    );
-    allWorkouts.value = data as WorkoutResponse;
-    console.log("Fetched workouts:", data);
-  } catch (error) {
-    console.error("Error fetching workouts:", error);
-    allWorkouts.value = null;
-  } finally {
-    isLoading.value = false;
+// Fetch workouts on mount
+onMounted(() => {
+  workoutsStore.fetchRecentWorkouts();
+  if (process.client) {
+    nextTick(() => {
+      createWorkoutChart();
+    });
   }
-};
+});
 
 const createWorkoutChart = async () => {
   if (!process.client) return;
@@ -185,7 +164,7 @@ const createWorkoutChart = async () => {
       const weekLabel = `Week ${weekStart.getDate()}/${weekStart.getMonth() + 1}`;
       weekLabels.push(weekLabel);
 
-      const workoutsInWeek = workouts.filter((workout: Workout) => {
+      const workoutsInWeek = workouts.filter((workout: any) => {
         const workoutDate = new Date(workout.created_at || workout.start_time || '');
         return workoutDate >= weekStart && workoutDate < weekEnd;
       });
@@ -262,18 +241,6 @@ const createWorkoutChart = async () => {
 };
 
 watch(
-  () => integrationStore.hevyApiKey,
-  async (newApiKey) => {
-    if (newApiKey) {
-      await fetchWorkouts();
-    } else {
-      allWorkouts.value = null;
-    }
-  },
-  { immediate: true },
-);
-
-watch(
   () => allWorkouts.value,
   () => {
     if (process.client) {
@@ -294,14 +261,6 @@ watch(
     }
   }
 );
-
-onMounted(() => {
-  if (process.client) {
-    nextTick(() => {
-      createWorkoutChart();
-    });
-  }
-});
 
 onUnmounted(() => {
   if (chart) {
