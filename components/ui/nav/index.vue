@@ -5,7 +5,7 @@
     <NuxtLink to="/stats" class="nav-link">
       <Icon name="line-md:list" class="!size-10" />
     </NuxtLink>
-    <NuxtLink to="/workouts" class="nav-link">
+    <NuxtLink to="/routines" class="nav-link">
       <Icon name="line-md:clipboard-list" class="!size-10" />
     </NuxtLink>
     <NuxtLink to="/" class="nav-link">

@@ -154,19 +154,41 @@ const createWorkoutChart = async () => {
     const workouts = allWorkouts.value.workouts;
     const now = new Date();
 
+    // Get the most recent Monday
+    const getMondayOfWeek = (date: Date) => {
+      const d = new Date(date);
+      const day = d.getDay();
+      const diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
+      return new Date(d.setDate(diff));
+    };
+
+    const currentMonday = getMondayOfWeek(now);
+    
     const weekLabels: string[] = [];
     const workoutCounts: number[] = [];
 
+    // Generate last 4 weeks (including current week)
     for (let i = 3; i >= 0; i--) {
-      const weekStart = new Date(now.getTime() - (i * 7 * 24 * 60 * 60 * 1000));
-      const weekEnd = new Date(weekStart.getTime() + (7 * 24 * 60 * 60 * 1000));
+      const weekStart = new Date(currentMonday.getTime() - (i * 7 * 24 * 60 * 60 * 1000));
+      const weekEnd = new Date(weekStart.getTime() + (6 * 24 * 60 * 60 * 1000)); // Sunday of that week
       
-      const weekLabel = `Week ${weekStart.getDate()}/${weekStart.getMonth() + 1}`;
+      // Format the label as "dd/mm - dd/mm"
+      const startDay = weekStart.getDate().toString().padStart(2, '0');
+      const startMonth = (weekStart.getMonth() + 1).toString().padStart(2, '0');
+      const endDay = weekEnd.getDate().toString().padStart(2, '0');
+      const endMonth = (weekEnd.getMonth() + 1).toString().padStart(2, '0');
+      
+      const weekLabel = `${startDay}/${startMonth} - ${endDay}/${endMonth}`;
       weekLabels.push(weekLabel);
 
+      // Count workouts in this week (Monday to Sunday inclusive)
       const workoutsInWeek = workouts.filter((workout: any) => {
         const workoutDate = new Date(workout.created_at || workout.start_time || '');
-        return workoutDate >= weekStart && workoutDate < weekEnd;
+        const workoutDateStart = new Date(workoutDate.getFullYear(), workoutDate.getMonth(), workoutDate.getDate());
+        const weekStartDate = new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate());
+        const weekEndDate = new Date(weekEnd.getFullYear(), weekEnd.getMonth(), weekEnd.getDate());
+        
+        return workoutDateStart >= weekStartDate && workoutDateStart <= weekEndDate;
       });
 
       workoutCounts.push(workoutsInWeek.length);
@@ -226,7 +248,9 @@ const createWorkoutChart = async () => {
           },
           x: {
             ticks: {
-              color: 'rgba(156, 163, 175, 1)'
+              color: 'rgba(156, 163, 175, 1)',
+              maxRotation: 0,
+              minRotation: 0
             },
             grid: {
               display: false

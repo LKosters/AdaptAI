@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NuxtLink class="flex items-center gap-2 mb-5" to="/workouts">
+    <NuxtLink class="flex items-center gap-2 mb-5" to="/routines">
       <Icon name="line-md:arrow-left" class="!size-5" />
       Terug naar overzicht
     </NuxtLink>

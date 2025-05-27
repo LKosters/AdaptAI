@@ -1,13 +1,13 @@
 <template>
   <div>
     <div>
-      <NuxtLink class="flex items-center gap-2 mb-5" to="/workouts">
+      <NuxtLink class="flex items-center gap-2 mb-5" to="/routines">
         <Icon name="line-md:arrow-left" class="!size-5" />
-        Alle workouts
+        Alle routines
       </NuxtLink>
       <BlockHero title="Routine aanmaken" />
       <p class="text-lg font-bold mb-5">
-        Wat voor een workout zou je willen maken?
+        Wat voor een workout zou je willen doen?
       </p>
       <textarea
         placeholder="Een legday waar je benen van afbreken!"
