@@ -170,7 +170,12 @@ async function generateContent() {
     await workoutsStore.fetchRecentWorkouts();
     const recentWorkouts = workoutsStore.recentWorkouts;
 
+    // Fetch existing routines to avoid duplicates
+    await routinesStore.fetchRoutines();
+    const existingRoutines = routinesStore.routines;
+
     console.log("recentWorkouts", recentWorkouts);
+    console.log("existingRoutines", existingRoutines);
 
     const { $firebaseApp } = useNuxtApp();
 
@@ -182,6 +187,10 @@ async function generateContent() {
       ? `\n\nUser's recent workouts for personalization:\n${JSON.stringify(recentWorkouts, null, 2)}`
       : "\n\nNo recent workout data available.";
 
+    const existingRoutinesContext = existingRoutines?.routines
+      ? `\n\nUser's existing routines (avoid creating routines with the exact same exercise order):\n${JSON.stringify(existingRoutines.routines, null, 2)}`
+      : "\n\nNo existing routines available.";
+
     const systemInstruction: Content = {
       role: "system",
       parts: [
@@ -190,8 +199,10 @@ async function generateContent() {
 
 IMPORTANT: You MUST only use exercise template IDs that exist in the provided workout templates data. Each exercise template has an "id" field - use ONLY these exact IDs.
 
+AVOID DUPLICATES: Look at the user's existing routines and ensure you don't create a routine with the exact same exercise order. You can use the same exercises but vary the order, sets, reps, or include different exercises to make it unique.
+
 Available workout templates:
-${JSON.stringify(workoutTemplates, null, 2)}${recentWorkoutsContext}
+${JSON.stringify(workoutTemplates, null, 2)}${recentWorkoutsContext}${existingRoutinesContext}
 
 Rules:
 1. ONLY use exercise template IDs from the "exercise_templates" array above
@@ -201,6 +212,8 @@ Rules:
    - "reps_only": use only reps (set weight_kg to 0)
    - "duration": use duration_seconds only
    - "bodyweight_weighted": can use weight_kg and reps
+4. AVOID creating routines with the exact same exercise order as existing routines
+5. You can use the same exercises but vary the order, sets, reps, or include different exercises
 
 The response must be valid JSON in this exact format:
 
