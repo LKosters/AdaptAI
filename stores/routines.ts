@@ -101,7 +101,7 @@ export const useRoutinesStore = defineStore("routines", () => {
           fetchRoutines();
         }
       }
-    }
+    },
   );
 
   return {
@@ -113,4 +113,4 @@ export const useRoutinesStore = defineStore("routines", () => {
     clearRoutines,
     refreshRoutines,
   };
-}); 
+});

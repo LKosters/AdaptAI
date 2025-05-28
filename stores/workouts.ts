@@ -79,7 +79,7 @@ export const useWorkoutsStore = defineStore("workouts", () => {
           fetchRecentWorkouts();
         }
       }
-    }
+    },
   );
 
   return {
@@ -91,4 +91,4 @@ export const useWorkoutsStore = defineStore("workouts", () => {
     clearWorkouts,
     refreshWorkouts,
   };
-}); 
+});

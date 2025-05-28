@@ -41,7 +41,9 @@
           v-for="exercise in workout.routine.exercises"
           :key="exercise.exercise_template_id"
         >
-          <p class="font-bold mb-2">{{ getExerciseName(exercise.exercise_template_id) }}</p>
+          <p class="font-bold mb-2">
+            {{ getExerciseName(exercise.exercise_template_id) }}
+          </p>
           <p class="mb-2">{{ exercise.notes }}</p>
           <div>
             <p v-for="set in exercise.sets" :key="set.id">
@@ -122,6 +124,7 @@ const workout = ref<Workout | null>(null);
 const isLoading = ref(false);
 const integrationStore = useIntegrationStore();
 const workoutsStore = useWorkoutsStore();
+const routinesStore = useRoutinesStore();
 
 const workoutTemplates = ref<WorkoutTemplatesData | null>(null);
 const exerciseTemplatesMap = ref<Record<string, string>>({});
@@ -136,7 +139,7 @@ onMounted(async () => {
 
 async function loadExerciseTemplates() {
   try {
-    const templates = await $fetch("/workout_templates.json") as any;
+    const templates = (await $fetch("/workout_templates.json")) as any;
     const map: Record<string, string> = {};
     templates.exercise_templates?.forEach((template: any) => {
       map[template.id] = template.title;
@@ -280,6 +283,9 @@ async function saveWorkout() {
     );
 
     console.log("Workout saved successfully:", response);
+    
+    // Refresh routines after successfully saving the workout
+    await routinesStore.refreshRoutines();
   } catch (error) {
     console.error("Error saving workout:", error);
   } finally {

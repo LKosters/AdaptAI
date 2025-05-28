@@ -26,9 +26,10 @@
       >
         <p class="text-gray-400">Geen routines gevonden.</p>
       </div>
-      <div
+      <NuxtLink
         v-else
-        class="mb-4 bg-[#282828]/70 p-4 rounded-[20px]"
+        :to="`/routines/${routine.id}`"
+        class="mb-4 block bg-[#282828]/70 p-4 rounded-[20px]"
         v-for="routine in allRoutines?.routines"
         :key="routine.id"
       >
@@ -43,7 +44,7 @@
             {{ formatDate(routine.created_at) }}
           </p>
         </div>
-      </div>
+      </NuxtLink>
     </div>
   </div>
 </template>
