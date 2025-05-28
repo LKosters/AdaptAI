@@ -70,33 +70,33 @@ watch(
 
 <style scoped>
 .animate-pulse-slow {
-  animation: pulse-slow 30s ease-in-out infinite;
+  animation: pulse-slow 25s ease-in-out infinite;
 }
 
 @keyframes pulse-slow {
   0% {
-    transform: translateY(70%) scale(1);
+    transform: translateY(70%) scale(1.05);
   }
   15% {
     transform: translateY(70%) scale(1.08);
   }
   30% {
-    transform: translateY(70%) scale(0.95);
+    transform: translateY(70%) scale(0.99);
   }
   45% {
-    transform: translateY(70%) scale(1.12);
+    transform: translateY(70%) scale(1.03);
   }
   60% {
-    transform: translateY(70%) scale(1.03);
+    transform: translateY(70%) scale(1.05);
   }
   75% {
     transform: translateY(70%) scale(0.98);
   }
   90% {
-    transform: translateY(70%) scale(1.06);
+    transform: translateY(70%) scale(1.01);
   }
   100% {
-    transform: translateY(70%) scale(1);
+    transform: translateY(70%) scale(1.03);
   }
 }
 </style>
