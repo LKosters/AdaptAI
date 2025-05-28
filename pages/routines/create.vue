@@ -283,7 +283,7 @@ async function saveWorkout() {
     );
 
     console.log("Workout saved successfully:", response);
-    
+
     // Refresh routines after successfully saving the workout
     await routinesStore.refreshRoutines();
   } catch (error) {
