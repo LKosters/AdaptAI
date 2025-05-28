@@ -55,9 +55,10 @@
       >
         <p class="text-gray-400">Geen workouts gevonden.</p>
       </div>
-      <div
+      <NuxtLink
         v-else
-        class="mb-4 bg-[#282828]/70 p-4 rounded-[20px]"
+        :to="`/workout/${workout.id}`"
+        class="mb-4 block bg-[#282828]/70 p-4 rounded-[20px]"
         v-for="workout in allWorkouts?.workouts"
         :key="workout.id"
       >
@@ -76,7 +77,7 @@
             {{ formatDate(workout.created_at) }}
           </p>
         </div>
-      </div>
+      </NuxtLink>
     </div>
   </div>
 </template>

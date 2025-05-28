@@ -25,23 +25,23 @@
       </div>
 
       <div
-          class="mb-4 bg-[#282828]/70 p-4 rounded-[20px]"
-          v-for="exercise in routine.exercises"
-          :key="exercise.exercise_template_id"
-        >
-          <p class="font-bold mb-2">
-            {{ exercise.title }}
+        class="mb-4 bg-[#282828]/70 p-4 rounded-[20px]"
+        v-for="exercise in routine.exercises"
+        :key="exercise.exercise_template_id"
+      >
+        <p class="font-bold mb-2">
+          {{ exercise.title }}
+        </p>
+        <p class="mb-2">{{ exercise.notes }}</p>
+        <div>
+          <p v-for="set in exercise.sets" :key="set.id">
+            <span v-if="set.weight_kg || set.reps">
+              {{ set.weight_kg }}KG - {{ set.reps }} reps
+            </span>
+            <span v-else> {{ set.duration_seconds }} seconds </span>
           </p>
-          <p class="mb-2">{{ exercise.notes }}</p>
-          <div>
-            <p v-for="set in exercise.sets" :key="set.id">
-              <span v-if="set.weight_kg || set.reps">
-                {{ set.weight_kg }}KG - {{ set.reps }} reps
-              </span>
-              <span v-else> {{ set.duration_seconds }} seconds </span>
-            </p>
-          </div>
         </div>
+      </div>
     </div>
 
     <div v-else>Routine not found</div>
