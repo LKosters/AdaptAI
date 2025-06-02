@@ -7,11 +7,7 @@
     </div>
 
     <div v-else-if="routine">
-      <NuxtLink class="flex items-center gap-2 mb-5" to="/routines">
-        <Icon name="line-md:arrow-left" class="!size-5" />
-        Alle routines
-      </NuxtLink>
-      <BlockHero :title="routine.title" />
+      <BlockHero :link="{ link: '/routines', title: 'Alle routines', icon: 'line-md:arrow-left'}" :title="routine.title" />
 
       <div class="flex items-center gap-5 mb-5">
         <p class="text-sm text-gray-400 flex items-center gap-2">

@@ -1,11 +1,7 @@
 <template>
   <div>
     <div>
-      <NuxtLink class="flex items-center gap-2 mb-5" to="/routines">
-        <Icon name="line-md:arrow-left" class="!size-5" />
-        Alle routines
-      </NuxtLink>
-      <BlockHero title="Routine aanmaken" />
+      <BlockHero :link="{ link: '/routines', title: 'Alle routines', icon: 'line-md:arrow-left'}" title="Routine aanmaken" />
       <p class="text-lg font-bold mb-5">
         Wat voor een workout zou je willen doen?
       </p>

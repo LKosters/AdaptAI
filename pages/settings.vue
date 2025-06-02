@@ -1,10 +1,6 @@
 <template>
   <div>
-    <NuxtLink class="flex items-center gap-2 mb-5" to="/routines">
-      <Icon name="line-md:arrow-left" class="!size-5" />
-      Terug naar overzicht
-    </NuxtLink>
-    <BlockHero title="Instellingen" />
+    <BlockHero :link="{ link: '/routines', title: 'Terug naar overzicht', icon: 'line-md:arrow-left'}" title="Instellingen" />
     <p class="text-lg font-bold mb-5">
       Vul hier je Hevy API key in als je de integratie wilt gebruiken.
     </p>
