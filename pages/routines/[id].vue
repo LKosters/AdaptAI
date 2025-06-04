@@ -7,7 +7,7 @@
     </div>
 
     <div v-else-if="routine">
-      <BlockHero :link="{ link: '/routines', title: 'Alle routines', icon: 'line-md:arrow-left'}" :title="routine.title" />
+      <BlockHero @deleteRoutine="deleteRoutine" :single="routineId" :link="{ link: '/routines', title: 'Alle routines', icon: 'line-md:arrow-left'}" :title="routine.title" />
 
       <div class="flex items-center gap-5 mb-5">
         <p class="text-sm text-gray-400 flex items-center gap-2">
@@ -66,4 +66,8 @@ onMounted(async () => {
     await routinesStore.fetchRoutines();
   }
 });
+
+const deleteRoutine = () => {
+  console.log('delete');
+}
 </script>
