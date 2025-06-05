@@ -52,19 +52,16 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, nextTick } from 'vue';
-import { useNuxtApp } from '#app';
+import { useNuxtApp } from 'nuxt/app';
 import { useAICoachStore } from '~/stores/aiCoach';
 import { useWorkoutsStore } from '~/stores/workouts';
 import { useRoutinesStore } from '~/stores/routines';
 import type { FirebaseApp } from "firebase/app";
-import type {
-  ChatSession,
-  GenerationConfig,
-  GenerativeModel,
-  Content,
-} from "firebase/ai";
+import type { ChatSession } from "firebase/ai";
 import { getGenerativeModel, getAI } from "firebase/ai";
+import type { Content, GenerationConfig } from '@/types';
 
+const nuxtApp = useNuxtApp();
 const aiCoachStore = useAICoachStore();
 const workoutsStore = useWorkoutsStore();
 const routinesStore = useRoutinesStore();
@@ -82,7 +79,6 @@ onMounted(async () => {
   ]);
 
   // Initialize Gemini chat
-  const { $firebaseApp } = useNuxtApp();
   const generationConfig: GenerationConfig = {
     responseMimeType: "text/plain",
   };
@@ -108,7 +104,7 @@ Keep responses concise, friendly, and focused on helping the user achieve their 
     ],
   };
 
-  const ai = getAI($firebaseApp as FirebaseApp);
+  const ai = getAI(nuxtApp.$firebaseApp as FirebaseApp);
   const model = getGenerativeModel(ai, {
     model: "gemini-2.5-flash-preview-05-20",
     generationConfig,

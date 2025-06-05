@@ -2,22 +2,17 @@ import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 import { useWorkoutsStore } from "./workouts";
 import { useRoutinesStore } from "./routines";
-
-interface Message {
-  role: 'user' | 'assistant';
-  content: string;
-  timestamp: number;
-}
+import type { AIMessage } from '~/types'
 
 export const useAICoachStore = defineStore("aiCoach", () => {
-  const messages = ref<Message[]>([]);
+  const messages = ref<AIMessage[]>([]);
   const isLoading = ref(false);
   const error = ref<string>("");
 
   const workoutsStore = useWorkoutsStore();
   const routinesStore = useRoutinesStore();
 
-  const addMessage = (role: 'user' | 'assistant', content: string) => {
+  const addMessage = (role: AIMessage['role'], content: string) => {
     messages.value.push({
       role,
       content,
