@@ -60,6 +60,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, nextTick } from 'vue'
+import type { Ref } from 'vue'
 import { useNuxtApp } from '#app'
 import { useAICoachStore } from '~/stores/aiCoach'
 import { useWorkoutsStore } from '~/stores/workouts'
@@ -80,10 +81,10 @@ const aiCoachStore = useAICoachStore()
 const workoutsStore = useWorkoutsStore()
 const routinesStore = useRoutinesStore()
 
-const userMessage = ref<string>('')
-const isLoading = ref<boolean>(false)
-const chatContainer = ref<HTMLElement | null>(null)
-const chat = ref<ChatSession | null>(null)
+const userMessage: Ref<string> = ref('')
+const isLoading: Ref<boolean> = ref(false)
+const chatContainer: Ref<HTMLElement | null> = ref(null)
+const chat: Ref<ChatSession | null> = ref(null)
 
 onMounted(async () => {
   // Fetch initial data

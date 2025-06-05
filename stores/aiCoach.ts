@@ -3,13 +3,14 @@ import { ref, computed } from "vue";
 import { useWorkoutsStore } from "./workouts";
 import { useRoutinesStore } from "./routines";
 import type { AIMessage } from '~/types'
+import type { Ref } from 'vue'
 
 type MessageRole = AIMessage['role']
 
 export const useAICoachStore = defineStore("aiCoach", () => {
-  const messages = ref<AIMessage[]>([]);
-  const isLoading = ref(false);
-  const error = ref<string>("");
+  const messages: Ref<AIMessage[]> = ref<AIMessage[]>([]);
+  const isLoading: Ref<boolean> = ref(false);
+  const error: Ref<string | null> = ref(null);
 
   const workoutsStore = useWorkoutsStore();
   const routinesStore = useRoutinesStore();
@@ -24,7 +25,15 @@ export const useAICoachStore = defineStore("aiCoach", () => {
 
   function clearMessages(): void {
     messages.value = [];
-    error.value = "";
+    error.value = null;
+  }
+
+  function setError(message: string | null): void {
+    error.value = message;
+  }
+
+  function setLoading(value: boolean): void {
+    isLoading.value = value;
   }
 
   const getWorkoutContext = computed(() => {
@@ -47,6 +56,8 @@ export const useAICoachStore = defineStore("aiCoach", () => {
     error,
     addMessage,
     clearMessages,
+    setError,
+    setLoading,
     getWorkoutContext,
     getRoutineContext
   };
