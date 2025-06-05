@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "jsx": "preserve",
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"],
+      "@/*": ["./*"],
+      "#app": ["./node_modules/nuxt/dist/app"],
+      "#head": ["./node_modules/nuxt/dist/head/runtime"],
+      "#imports": ["./types/imports.d.ts"],
+      "#build/*": ["./types/build/*"]
+    },
+    "types": [
+      "@types/node",
+      "vue",
+      "@nuxt/types",
+      "@nuxt/schema",
+      "@nuxtjs/tailwindcss",
+      "firebase/ai",
+      "h3"
+    ],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"]
+  },
+  "include": [
+    "*.{ts,tsx,vue}",
+    "./**/*.{ts,tsx,vue}",
+    "types/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".nuxt",
+    ".output"
+  ]
+}
