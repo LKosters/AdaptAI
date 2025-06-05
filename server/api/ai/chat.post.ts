@@ -1,10 +1,13 @@
 import { OpenAI } from 'openai'
+import { H3Event } from 'h3'
+
+const config = useRuntimeConfig()
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
+  apiKey: config.openaiApiKey
 })
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async (event: H3Event) => {
   try {
     const { message, context } = await readBody(event)
 

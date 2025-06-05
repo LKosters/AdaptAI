@@ -41,7 +41,8 @@
             class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50"
             :disabled="isLoading || !userMessage.trim()"
           >
-            Send
+            <span v-if="!isLoading">Send</span>
+            <span v-else>Thinking...</span>
           </button>
         </form>
       </div>
@@ -54,12 +55,14 @@ import { ref, onMounted, nextTick } from 'vue';
 import { useAICoachStore } from '~/stores/aiCoach';
 import { useWorkoutsStore } from '~/stores/workouts';
 import { useRoutinesStore } from '~/stores/routines';
+import { useAIChat } from '~/composables/useAIChat';
 
 const aiCoachStore = useAICoachStore();
 const workoutsStore = useWorkoutsStore();
 const routinesStore = useRoutinesStore();
+const { generateAIResponse, isLoading } = useAIChat();
+
 const userMessage = ref('');
-const isLoading = ref(false);
 const chatContainer = ref<HTMLElement | null>(null);
 
 onMounted(async () => {
@@ -87,27 +90,30 @@ const sendMessage = async () => {
 
   const message = userMessage.value;
   userMessage.value = '';
-  isLoading.value = true;
 
   // Add user message
   aiCoachStore.addMessage('user', message);
   await scrollToBottom();
 
   try {
-    // Here you would typically make an API call to your AI service
-    // For now, we'll just echo back a simple response
-    const context = `${aiCoachStore.getWorkoutContext}\n${aiCoachStore.getRoutineContext}`;
+    // Get context from stores
+    const context = `
+Recent Workouts:
+${workoutsStore.recentWorkouts?.workouts.map(w => `- ${w.title} (${w.start_time})`).join('\n') || 'No recent workouts'}
+
+Available Routines:
+${routinesStore.routines?.routines.map(r => `- ${r.title} (${r.exercises.length} exercises)`).join('\n') || 'No routines'}
+`;
+
+    // Get AI response
+    const response = await generateAIResponse(message, context);
     
-    // Simulate AI response delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    aiCoachStore.addMessage('assistant', `I see your fitness data. How can I help you with your training?`);
+    // Add AI response to chat
+    aiCoachStore.addMessage('assistant', response);
     await scrollToBottom();
   } catch (error) {
     console.error('Error processing message:', error);
     aiCoachStore.addMessage('assistant', 'Sorry, I encountered an error. Please try again.');
-  } finally {
-    isLoading.value = false;
   }
 };
 </script>

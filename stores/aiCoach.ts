@@ -25,7 +25,7 @@ export const useAICoachStore = defineStore("aiCoach", () => {
     });
   };
 
-  const clearChat = () => {
+  const clearMessages = () => {
     messages.value = [];
     error.value = "";
   };
@@ -49,7 +49,7 @@ export const useAICoachStore = defineStore("aiCoach", () => {
     isLoading,
     error,
     addMessage,
-    clearChat,
+    clearMessages,
     getWorkoutContext,
     getRoutineContext
   };
