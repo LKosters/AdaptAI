@@ -52,14 +52,20 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, nextTick } from 'vue';
-import { useNuxtApp } from 'nuxt/app';
+import { useNuxtApp } from '#app';
 import { useAICoachStore } from '~/stores/aiCoach';
 import { useWorkoutsStore } from '~/stores/workouts';
 import { useRoutinesStore } from '~/stores/routines';
 import type { FirebaseApp } from "firebase/app";
-import type { ChatSession } from "firebase/ai";
+import type {
+  ChatSession,
+  GenerationConfig,
+  Content,
+  GenerativeModel,
+  Part
+} from "firebase/ai";
 import { getGenerativeModel, getAI } from "firebase/ai";
-import type { Content, GenerationConfig } from '@/types';
+import type { AIMessage } from '~/types';
 
 const nuxtApp = useNuxtApp();
 const aiCoachStore = useAICoachStore();
@@ -100,12 +106,12 @@ ${routinesStore.routines?.routines.map(r => `- ${r.title} (${r.exercises.length}
 ${context}
 
 Keep responses concise, friendly, and focused on helping the user achieve their fitness goals. Provide specific, actionable advice based on their workout history and available routines.`
-      },
+      } as Part,
     ],
   };
 
   const ai = getAI(nuxtApp.$firebaseApp as FirebaseApp);
-  const model = getGenerativeModel(ai, {
+  const model: GenerativeModel = getGenerativeModel(ai, {
     model: "gemini-2.5-flash-preview-05-20",
     generationConfig,
     systemInstruction,
@@ -140,7 +146,7 @@ const sendMessage = async () => {
   try {
     const userMessage: Content = {
       role: "user",
-      parts: [{ text: message }],
+      parts: [{ text: message } as Part],
     };
 
     const response = await chat.value.sendMessage(userMessage.parts);
