@@ -1,48 +1,56 @@
 <template>
-  <div class="container mx-auto px-4 py-8">
+  <div>
     <BlockHero :link="{ link: '#', title: 'AI Coach', icon: 'line-md:volume-low-filled'}" title="AI Coach" />
     
     <!-- Chat Container -->
-    <div class="max-w-4xl mx-auto mt-8 bg-white rounded-lg shadow-lg">
+    <div class="bg-[#282828]/70 rounded-[20px] overflow-hidden">
       <!-- Messages Area -->
-      <div class="h-[500px] overflow-y-auto p-6 space-y-4" ref="chatContainer">
+      <div class="h-[calc(100vh-300px)] min-h-[400px] overflow-y-auto p-4 space-y-3" ref="chatContainer">
         <template v-if="aiCoachStore.messages.length === 0">
-          <div class="text-center text-gray-500">
-            Start chatting with your AI Coach! I can help you with your workouts and routines.
+          <div class="text-center text-gray-400 mt-8">
+            <Icon name="line-md:ai" class="!size-12 mb-2 mx-auto" />
+            <p>Start chatting with your AI Coach! I can help you with your workouts and routines.</p>
           </div>
         </template>
         <template v-else>
           <div v-for="message in aiCoachStore.messages" :key="message.timestamp" 
                :class="['flex', message.role === 'user' ? 'justify-end' : 'justify-start']">
             <div :class="[
-              'max-w-[70%] rounded-lg p-4',
+              'max-w-[85%] rounded-[20px] p-4',
               message.role === 'user' 
-                ? 'bg-blue-500 text-white' 
-                : 'bg-gray-100 text-gray-800'
+                ? 'bg-primary text-black font-medium' 
+                : 'bg-[#1E1E1E] text-white'
             ]">
-              {{ message.content }}
+              <div class="flex items-start gap-2">
+                <Icon 
+                  v-if="message.role === 'assistant'"
+                  name="line-md:ai" 
+                  class="!size-5 mt-1 flex-shrink-0" 
+                />
+                <div class="break-words">{{ message.content }}</div>
+              </div>
             </div>
           </div>
         </template>
       </div>
 
       <!-- Input Area -->
-      <div class="border-t p-4">
+      <div class="border-t border-[#3E3E3E] p-4">
         <form @submit.prevent="sendMessage" class="flex gap-2">
           <input
             v-model="userMessage"
             type="text"
             placeholder="Ask your AI coach something..."
-            class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="flex-1 px-4 py-3 bg-[#1E1E1E] border border-[#3E3E3E] text-white rounded-[20px] focus:outline-none focus:ring-2 focus:ring-primary/50"
             :disabled="isLoading"
           />
           <button
             type="submit"
-            class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50"
+            class="btn-primary !w-auto px-6"
             :disabled="isLoading || !userMessage.trim()"
           >
-            <Icon v-if="isLoading" name="line-md:loading-twotone-loop" />
-            <span v-else>Send</span>
+            <Icon v-if="isLoading" name="line-md:loading-twotone-loop" class="!size-6" />
+            <Icon v-else name="line-md:send-filled" class="!size-6" />
           </button>
         </form>
       </div>
@@ -123,6 +131,9 @@ Keep responses concise, friendly, and focused on helping the user achieve their 
   if (aiCoachStore.messages.length === 0) {
     aiCoachStore.addMessage('assistant', 'Hello! I\'m your AI fitness coach. I can help you with your workouts and routines. What would you like to know?')
   }
+
+  // Initial scroll to bottom
+  await scrollToBottom()
 })
 
 const scrollToBottom = async (): Promise<void> => {
@@ -163,3 +174,16 @@ const sendMessage = async (): Promise<void> => {
   }
 }
 </script>
+
+<style scoped>
+/* Hide scrollbar for Chrome, Safari and Opera */
+.overflow-y-auto::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.overflow-y-auto {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+</style>
