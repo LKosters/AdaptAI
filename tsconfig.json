@@ -4,16 +4,19 @@
   "compilerOptions": {
     "strict": true,
     "skipLibCheck": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
     "target": "ESNext",
     "module": "ESNext",
     "baseUrl": ".",
     "paths": {
       "~/*": ["./*"],
       "@/*": ["./*"],
-      "#app": ["node_modules/nuxt/dist/app"],
-      "#head": ["node_modules/nuxt/dist/head/runtime"],
-      "#imports": [".nuxt/imports"]
+      "#app": ["./.nuxt/types/app"],
+      "#head": ["./.nuxt/types/head"],
+      "#imports": ["./.nuxt/types/imports"],
+      "#build/*": ["./.nuxt/types/build/*"]
     },
     "types": [
       "@types/node",
@@ -26,7 +29,8 @@
   },
   "include": [
     "./**/*",
-    ".nuxt/nuxt.d.ts"
+    "./.nuxt/nuxt.d.ts",
+    "./.nuxt/types/imports.d.ts"
   ],
   "exclude": [
     "node_modules",

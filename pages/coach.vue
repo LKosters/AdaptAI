@@ -65,7 +65,7 @@ import type {
   Part
 } from 'firebase/ai'
 import { getGenerativeModel, getAI } from 'firebase/ai'
-import type { AIMessage } from '~/types'
+import type { AIMessage, Workout, Routine } from '~/types'
 
 const nuxtApp = useNuxtApp()
 const aiCoachStore = useAICoachStore()
@@ -91,10 +91,10 @@ onMounted(async () => {
 
   const context = `
 Recent Workouts:
-${workoutsStore.recentWorkouts?.workouts.map(w => `- ${w.title} (${w.start_time})`).join('\n') || 'No recent workouts'}
+${workoutsStore.recentWorkouts?.workouts.map((w: Workout) => `- ${w.title} (${w.start_time})`).join('\n') || 'No recent workouts'}
 
 Available Routines:
-${routinesStore.routines?.routines.map(r => `- ${r.title} (${r.exercises.length} exercises)`).join('\n') || 'No routines'}
+${routinesStore.routines?.routines.map((r: Routine) => `- ${r.title} (${r.exercises.length} exercises)`).join('\n') || 'No routines'}
 `
 
   const systemInstruction: Content = {
