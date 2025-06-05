@@ -4,6 +4,8 @@ import { useWorkoutsStore } from "./workouts";
 import { useRoutinesStore } from "./routines";
 import type { AIMessage } from '~/types'
 
+type MessageRole = AIMessage['role']
+
 export const useAICoachStore = defineStore("aiCoach", () => {
   const messages = ref<AIMessage[]>([]);
   const isLoading = ref(false);
@@ -12,7 +14,7 @@ export const useAICoachStore = defineStore("aiCoach", () => {
   const workoutsStore = useWorkoutsStore();
   const routinesStore = useRoutinesStore();
 
-  function addMessage(role: AIMessage['role'], content: string): void {
+  function addMessage(role: MessageRole, content: string): void {
     messages.value.push({
       role,
       content,

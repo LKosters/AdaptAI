@@ -1,3 +1,5 @@
+import { defineNuxtConfig } from 'nuxt/config'
+import type { NuxtConfig } from '@nuxt/schema'
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
@@ -24,4 +26,14 @@ export default defineNuxtConfig({
     hevyAPIEndpoint: process.env.HEVY_API_ENDPOINT,
     openaiApiKey: process.env.OPENAI_API_KEY
   },
-});
+  typescript: {
+    strict: true,
+    typeCheck: true,
+    shim: false
+  },
+  tailwindcss: {
+    configPath: '~/tailwind.config.ts',
+    exposeConfig: true,
+    viewer: true
+  }
+} satisfies NuxtConfig)
