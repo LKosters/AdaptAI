@@ -1,34 +1,52 @@
-import { OpenAI } from 'openai'
 import { H3Event } from 'h3'
-
-const config = useRuntimeConfig()
-
-const openai = new OpenAI({
-  apiKey: config.openaiApiKey
-})
+import type {
+  ChatSession,
+  GenerationConfig,
+  Content,
+} from "firebase/ai";
+import { getGenerativeModel, getAI } from "firebase/ai";
+import type { FirebaseApp } from "firebase/app";
 
 export default defineEventHandler(async (event: H3Event) => {
   try {
     const { message, context } = await readBody(event)
+    const nuxtApp = useNuxtApp();
 
-    const systemPrompt = `You are an AI fitness coach. Use the following context about the user's workouts and routines to provide personalized advice:
+    const generationConfig: GenerationConfig = {
+      responseMimeType: "text/plain",
+    };
+
+    const systemInstruction: Content = {
+      role: "system",
+      parts: [
+        {
+          text: `You are an AI fitness coach. Use the following context about the user's workouts and routines to provide personalized advice:
 
 ${context}
 
-Keep responses concise, friendly, and focused on helping the user achieve their fitness goals.`
-
-    const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: message }
+Keep responses concise, friendly, and focused on helping the user achieve their fitness goals. Provide specific, actionable advice based on their workout history and available routines.`
+        },
       ],
-      temperature: 0.7,
-      max_tokens: 500
-    })
+    };
+
+    const ai = getAI(nuxtApp.$firebaseApp as FirebaseApp);
+    const model = getGenerativeModel(ai, {
+      model: "gemini-2.5-flash-preview-05-20",
+      generationConfig,
+      systemInstruction,
+    });
+
+    const chat = model.startChat();
+    const userMessage: Content = {
+      role: "user",
+      parts: [{ text: message }],
+    };
+
+    const response = await chat.sendMessage(userMessage.parts);
+    const responseText = response.response.text();
 
     return {
-      response: completion.choices[0].message.content
+      response: responseText
     }
   } catch (error) {
     console.error('Error in AI chat endpoint:', error)
