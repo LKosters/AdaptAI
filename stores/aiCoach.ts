@@ -12,18 +12,18 @@ export const useAICoachStore = defineStore("aiCoach", () => {
   const workoutsStore = useWorkoutsStore();
   const routinesStore = useRoutinesStore();
 
-  const addMessage = (role: AIMessage['role'], content: string) => {
+  function addMessage(role: AIMessage['role'], content: string): void {
     messages.value.push({
       role,
       content,
       timestamp: Date.now()
     });
-  };
+  }
 
-  const clearMessages = () => {
+  function clearMessages(): void {
     messages.value = [];
     error.value = "";
-  };
+  }
 
   const getWorkoutContext = computed(() => {
     if (!workoutsStore.recentWorkouts) return '';

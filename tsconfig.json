@@ -4,20 +4,32 @@
   "compilerOptions": {
     "strict": true,
     "skipLibCheck": true,
+    "moduleResolution": "node",
+    "target": "ESNext",
+    "module": "ESNext",
     "baseUrl": ".",
     "paths": {
       "~/*": ["./*"],
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "#app": ["node_modules/nuxt/dist/app"],
+      "#head": ["node_modules/nuxt/dist/head/runtime"],
+      "#imports": [".nuxt/imports"]
     },
     "types": [
       "@types/node",
       "@nuxt/types",
       "@nuxt/vue-app",
       "@nuxtjs/tailwindcss",
-      "firebase/ai"
+      "firebase/ai",
+      "h3"
     ]
   },
+  "include": [
+    "./**/*",
+    ".nuxt/nuxt.d.ts"
+  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist"
   ]
 }

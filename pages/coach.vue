@@ -51,43 +51,43 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, nextTick } from 'vue';
-import { useNuxtApp } from '#app';
-import { useAICoachStore } from '~/stores/aiCoach';
-import { useWorkoutsStore } from '~/stores/workouts';
-import { useRoutinesStore } from '~/stores/routines';
-import type { FirebaseApp } from "firebase/app";
+import { ref, onMounted, nextTick } from 'vue'
+import { useNuxtApp } from '#app'
+import { useAICoachStore } from '~/stores/aiCoach'
+import { useWorkoutsStore } from '~/stores/workouts'
+import { useRoutinesStore } from '~/stores/routines'
+import type { FirebaseApp } from 'firebase/app'
 import type {
   ChatSession,
   GenerationConfig,
   Content,
   GenerativeModel,
   Part
-} from "firebase/ai";
-import { getGenerativeModel, getAI } from "firebase/ai";
-import type { AIMessage } from '~/types';
+} from 'firebase/ai'
+import { getGenerativeModel, getAI } from 'firebase/ai'
+import type { AIMessage } from '~/types'
 
-const nuxtApp = useNuxtApp();
-const aiCoachStore = useAICoachStore();
-const workoutsStore = useWorkoutsStore();
-const routinesStore = useRoutinesStore();
+const nuxtApp = useNuxtApp()
+const aiCoachStore = useAICoachStore()
+const workoutsStore = useWorkoutsStore()
+const routinesStore = useRoutinesStore()
 
-const userMessage = ref('');
-const isLoading = ref(false);
-const chatContainer = ref<HTMLElement | null>(null);
-const chat = ref<ChatSession | null>(null);
+const userMessage = ref<string>('')
+const isLoading = ref<boolean>(false)
+const chatContainer = ref<HTMLElement | null>(null)
+const chat = ref<ChatSession | null>(null)
 
 onMounted(async () => {
   // Fetch initial data
   await Promise.all([
     workoutsStore.fetchRecentWorkouts(),
     routinesStore.fetchRoutines()
-  ]);
+  ])
 
   // Initialize Gemini chat
   const generationConfig: GenerationConfig = {
     responseMimeType: "text/plain",
-  };
+  }
 
   const context = `
 Recent Workouts:
@@ -95,7 +95,7 @@ ${workoutsStore.recentWorkouts?.workouts.map(w => `- ${w.title} (${w.start_time}
 
 Available Routines:
 ${routinesStore.routines?.routines.map(r => `- ${r.title} (${r.exercises.length} exercises)`).join('\n') || 'No routines'}
-`;
+`
 
   const systemInstruction: Content = {
     role: "system",
@@ -108,58 +108,58 @@ ${context}
 Keep responses concise, friendly, and focused on helping the user achieve their fitness goals. Provide specific, actionable advice based on their workout history and available routines.`
       } as Part,
     ],
-  };
+  }
 
-  const ai = getAI(nuxtApp.$firebaseApp as FirebaseApp);
+  const ai = getAI(nuxtApp.$firebaseApp as FirebaseApp)
   const model: GenerativeModel = getGenerativeModel(ai, {
     model: "gemini-2.5-flash-preview-05-20",
     generationConfig,
     systemInstruction,
-  });
+  })
 
-  chat.value = model.startChat();
+  chat.value = model.startChat()
 
   // Add initial greeting if chat is empty
   if (aiCoachStore.messages.length === 0) {
-    aiCoachStore.addMessage('assistant', 'Hello! I\'m your AI fitness coach. I can help you with your workouts and routines. What would you like to know?');
+    aiCoachStore.addMessage('assistant', 'Hello! I\'m your AI fitness coach. I can help you with your workouts and routines. What would you like to know?')
   }
-});
+})
 
-const scrollToBottom = async () => {
-  await nextTick();
+const scrollToBottom = async (): Promise<void> => {
+  await nextTick()
   if (chatContainer.value) {
-    chatContainer.value.scrollTop = chatContainer.value.scrollHeight;
+    chatContainer.value.scrollTop = chatContainer.value.scrollHeight
   }
-};
+}
 
-const sendMessage = async () => {
-  if (!userMessage.value.trim() || isLoading.value || !chat.value) return;
+const sendMessage = async (): Promise<void> => {
+  if (!userMessage.value.trim() || isLoading.value || !chat.value) return
 
-  const message = userMessage.value;
-  userMessage.value = '';
-  isLoading.value = true;
+  const message = userMessage.value
+  userMessage.value = ''
+  isLoading.value = true
 
   // Add user message
-  aiCoachStore.addMessage('user', message);
-  await scrollToBottom();
+  aiCoachStore.addMessage('user', message)
+  await scrollToBottom()
 
   try {
     const userMessage: Content = {
       role: "user",
       parts: [{ text: message } as Part],
-    };
+    }
 
-    const response = await chat.value.sendMessage(userMessage.parts);
-    const responseText = response.response.text();
+    const response = await chat.value.sendMessage(userMessage.parts)
+    const responseText = response.response.text()
     
     // Add AI response to chat
-    aiCoachStore.addMessage('assistant', responseText);
-    await scrollToBottom();
+    aiCoachStore.addMessage('assistant', responseText)
+    await scrollToBottom()
   } catch (error) {
-    console.error('Error processing message:', error);
-    aiCoachStore.addMessage('assistant', 'Sorry, I encountered an error. Please try again.');
+    console.error('Error processing message:', error)
+    aiCoachStore.addMessage('assistant', 'Sorry, I encountered an error. Please try again.')
   } finally {
-    isLoading.value = false;
+    isLoading.value = false
   }
-};
+}
 </script>
