@@ -46,11 +46,11 @@
           />
           <button
             type="submit"
-            class="btn-primary !w-auto px-6"
+            class="btn-primary !w-auto p-5 !flex items-center justify-center"
             :disabled="isLoading || !userMessage.trim()"
           >
             <Icon v-if="isLoading" name="line-md:loading-twotone-loop" class="!size-6" />
-            <Icon v-else name="line-md:send-filled" class="!size-6" />
+            <Icon v-else name="line-md:telegram" class="!size-6" />
           </button>
         </form>
       </div>

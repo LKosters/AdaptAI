@@ -26,14 +26,4 @@ export default defineNuxtConfig({
     hevyAPIEndpoint: process.env.HEVY_API_ENDPOINT,
     openaiApiKey: process.env.OPENAI_API_KEY
   },
-  typescript: {
-    strict: true,
-    typeCheck: true,
-    shim: false
-  },
-  tailwindcss: {
-    configPath: '~/tailwind.config.ts',
-    exposeConfig: true,
-    viewer: true
-  }
 } satisfies NuxtConfig)

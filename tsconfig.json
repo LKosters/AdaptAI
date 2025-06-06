@@ -1,46 +1,4 @@
 {
   // https://nuxt.com/docs/guide/concepts/typescript
-  "extends": "./tsconfig.extend.json",
-  "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "strict": true,
-    "jsx": "preserve",
-    "noEmit": true,
-    "allowImportingTsExtensions": true,
-    "skipLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "~/*": ["./*"],
-      "@/*": ["./*"],
-      "#app": ["./types/modules"],
-      "#imports": ["./types/modules"],
-      "#build/*": ["./types/modules"]
-    },
-    "types": [
-      "@types/node",
-      "vue",
-      "@nuxt/types",
-      "@nuxt/schema",
-      "@nuxtjs/tailwindcss",
-      "firebase/ai",
-      "h3"
-    ],
-    "typeRoots": [
-      "./node_modules/@types",
-      "./types"
-    ]
-  },
-  "include": [
-    "*.{ts,tsx,vue}",
-    "./**/*.{ts,tsx,vue}",
-    "types/**/*.d.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    ".nuxt",
-    ".output"
-  ]
+  "extends": "./.nuxt/tsconfig.json"
 }

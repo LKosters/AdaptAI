@@ -2,13 +2,12 @@ import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 import { useWorkoutsStore } from "./workouts";
 import { useRoutinesStore } from "./routines";
-import type { AIMessage } from '~/types'
 import type { Ref } from 'vue'
 
-type MessageRole = AIMessage['role']
+type MessageRole = any
 
 export const useAICoachStore = defineStore("aiCoach", () => {
-  const messages: Ref<AIMessage[]> = ref<AIMessage[]>([]);
+  const messages: Ref<any[]> = ref<any[]>([]);
   const isLoading: Ref<boolean> = ref(false);
   const error: Ref<string | null> = ref(null);
 

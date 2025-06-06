@@ -22,7 +22,6 @@ interface ChatResponse {
 export default defineEventHandler(async (event: H3Event): Promise<ChatResponse> => {
   try {
     const { message, context } = await readBody<ChatRequest>(event)
-    const nuxtApp = useNuxtApp()
 
     const generationConfig: GenerationConfig = {
       responseMimeType: "text/plain",
