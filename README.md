@@ -32,6 +32,8 @@ The following environment variables are required:
 
 ```env
 HEVY_API_ENDPOINT=your_hevy_api_endpoint
+NUXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_key
+NUXT_CLERK_SECRET_KEY=your_clerk_sercret_key
 ```
 
 ## Installation
