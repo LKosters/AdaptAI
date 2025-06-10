@@ -1,78 +1,68 @@
-# Nuxt Minimal Starter
+# ✨ AdaptAI
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A modern web application built with Nuxt.js that integrates with Hevy to provide intelligent workout tracking and analysis. The application features AI-powered coaching, detailed statistics, and personalized workout routines.
 
-## Setup
+## Features
 
-Make sure to install dependencies:
+- **Workout Tracking**: Integration with Hevy API for seamless workout data synchronization
+- **AI Coach**: Intelligent workout analysis and recommendations
+- **Statistics Dashboard**: Visual representation of workout data and progress
+- **Personalized Routines**: Custom workout routines based on user preferences
+- **User Authentication**: Secure authentication powered by Clerk
 
-```bash
-# Merge template files
-cd /Users/laurenskosters/PhpstormProjects/adaptai && python3 merge_templates.py
+## Tech Stack
 
-# npm
-npm install
+- **Frontend Framework**: Nuxt.js 3
+- **UI Framework**: TailwindCSS
+- **State Management**: Pinia
+- **Authentication**: Clerk
+- **Charts**: Chart.js
+- **AI Integration**: Firebase AI
+- **Icons**: Line MD Icons
 
-# pnpm
-pnpm install
+## Prerequisites
 
-# yarn
-yarn install
+- Node.js (Latest LTS version recommended)
+- Hevy API Key
+- Firebase Configuration
 
-# bun
-bun install
+## Environment Variables
+
+The following environment variables are required:
+
+```env
+HEVY_API_ENDPOINT=your_hevy_api_endpoint
 ```
 
-## Development Server
+## Installation
 
-Start the development server on `http://localhost:3000`:
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Set up environment variables
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-```bash
-# npm
-npm run dev
+## Available Scripts
 
-# pnpm
-pnpm dev
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run generate` - Generate static project
+- `npm run preview` - Preview production build
+- `npm run format` - Format code with Prettier
 
-# yarn
-yarn dev
+## Project Structure
 
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- `assets/` - Static assets like CSS
+- `components/` - Vue components
+- `composables/` - Reusable Vue composables
+- `layouts/` - Page layouts
+- `pages/` - Application pages and routes
+- `plugins/` - Nuxt plugins
+- `public/` - Public static files
+- `server/` - Server-side code
+- `stores/` - Pinia stores 
