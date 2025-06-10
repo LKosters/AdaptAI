@@ -1,6 +1,13 @@
 <template>
   <div>
-    <BlockHero :link="{ link: '/settings', title: 'Instellingen', icon: 'line-md:cog-filled'}" title="Alle routines" />
+    <BlockHero
+      :link="{
+        link: '/settings',
+        title: 'Instellingen',
+        icon: 'line-md:cog-filled',
+      }"
+      title="Alle routines"
+    />
     <p class="text-lg font-bold mb-5">Maak een nieuwe routine aan met AI</p>
     <NuxtLink to="/routines/create" class="btn-primary">
       Routine aanmaken

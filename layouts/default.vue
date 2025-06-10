@@ -5,9 +5,7 @@
         <slot />
       </template>
       <template v-else>
-        <div class="flex justify-center items-center h-screen clerk-btn">
-          <SignInButton />
-        </div>
+        <BlockAuthBlock />
       </template>
     </div>
     <svg

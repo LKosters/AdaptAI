@@ -1,6 +1,13 @@
 <template>
   <div>
-    <BlockHero :link="{ link: '/routines', title: 'Terug naar overzicht', icon: 'line-md:arrow-left'}" title="Instellingen" />
+    <BlockHero
+      :link="{
+        link: '/routines',
+        title: 'Terug naar overzicht',
+        icon: 'line-md:arrow-left',
+      }"
+      title="Instellingen"
+    />
     <p class="text-lg font-bold mb-5">
       Vul hier je Hevy API key in als je de integratie wilt gebruiken.
     </p>

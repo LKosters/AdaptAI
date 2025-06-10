@@ -6,16 +6,16 @@
 
 <script lang="ts" setup>
 interface Props {
-  workouts: any[]
+  workouts: any[];
 }
 
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 
-const chartCanvas = ref<HTMLCanvasElement | null>(null)
-let chart: any = null
+const chartCanvas = ref<HTMLCanvasElement | null>(null);
+let chart: any = null;
 
 const createChart = async () => {
-  if (!process.client || !chartCanvas.value || !props.workouts?.length) return
+  if (!process.client || !chartCanvas.value || !props.workouts?.length) return;
 
   try {
     const {
@@ -28,7 +28,7 @@ const createChart = async () => {
       Title,
       Tooltip,
       Legend,
-    } = await import('chart.js')
+    } = await import("chart.js");
 
     Chart.register(
       CategoryScale,
@@ -39,42 +39,49 @@ const createChart = async () => {
       Title,
       Tooltip,
       Legend,
-    )
+    );
 
     const workoutsWithDuration = props.workouts
       .filter((workout: any) => workout.start_time && workout.end_time)
       .map((workout: any) => ({
         date: new Date(workout.created_at || workout.start_time),
-        duration: (new Date(workout.end_time).getTime() - new Date(workout.start_time).getTime()) / (1000 * 60),
-        title: workout.title
+        duration:
+          (new Date(workout.end_time).getTime() -
+            new Date(workout.start_time).getTime()) /
+          (1000 * 60),
+        title: workout.title,
       }))
       .sort((a, b) => a.date.getTime() - b.date.getTime())
-      .slice(-20)
+      .slice(-20);
 
     if (chart) {
-      chart.destroy()
+      chart.destroy();
     }
 
-    const ctx = chartCanvas.value.getContext('2d')
-    if (!ctx) return
+    const ctx = chartCanvas.value.getContext("2d");
+    if (!ctx) return;
 
     chart = new Chart(ctx, {
-      type: 'line',
+      type: "line",
       data: {
-        labels: workoutsWithDuration.map(w => w.date.toLocaleDateString('nl-NL')),
-        datasets: [{
-          label: 'Duur (minuten)',
-          data: workoutsWithDuration.map(w => Math.round(w.duration)),
-          backgroundColor: 'rgba(34, 197, 94, 0.1)',
-          borderColor: '#22c55e',
-          borderWidth: 3,
-          pointBackgroundColor: '#22c55e',
-          pointBorderColor: '#22c55e',
-          pointRadius: 4,
-          pointHoverRadius: 6,
-          fill: true,
-          tension: 0.4,
-        }],
+        labels: workoutsWithDuration.map((w) =>
+          w.date.toLocaleDateString("nl-NL"),
+        ),
+        datasets: [
+          {
+            label: "Duur (minuten)",
+            data: workoutsWithDuration.map((w) => Math.round(w.duration)),
+            backgroundColor: "rgba(34, 197, 94, 0.1)",
+            borderColor: "#22c55e",
+            borderWidth: 3,
+            pointBackgroundColor: "#22c55e",
+            pointBorderColor: "#22c55e",
+            pointRadius: 4,
+            pointHoverRadius: 6,
+            fill: true,
+            tension: 0.4,
+          },
+        ],
       },
       options: {
         responsive: true,
@@ -84,43 +91,43 @@ const createChart = async () => {
             display: false,
           },
           tooltip: {
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            titleColor: 'white',
-            bodyColor: 'white',
-            borderColor: '#22c55e',
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
+            titleColor: "white",
+            bodyColor: "white",
+            borderColor: "#22c55e",
             borderWidth: 1,
             callbacks: {
-              title: function(context: any) {
-                const index = context[0].dataIndex
-                return workoutsWithDuration[index]?.title || ''
+              title: function (context: any) {
+                const index = context[0].dataIndex;
+                return workoutsWithDuration[index]?.title || "";
               },
-              label: function(context: any) {
-                const duration = context.parsed.y
-                const hours = Math.floor(duration / 60)
-                const minutes = duration % 60
-                return hours > 0 ? `${hours}u ${minutes}m` : `${minutes}m`
-              }
-            }
+              label: function (context: any) {
+                const duration = context.parsed.y;
+                const hours = Math.floor(duration / 60);
+                const minutes = duration % 60;
+                return hours > 0 ? `${hours}u ${minutes}m` : `${minutes}m`;
+              },
+            },
           },
         },
         scales: {
           y: {
             beginAtZero: true,
             ticks: {
-              color: 'rgba(156, 163, 175, 1)',
-              callback: function(value: any) {
-                const hours = Math.floor(value / 60)
-                const minutes = value % 60
-                return hours > 0 ? `${hours}u ${minutes}m` : `${minutes}m`
-              }
+              color: "rgba(156, 163, 175, 1)",
+              callback: function (value: any) {
+                const hours = Math.floor(value / 60);
+                const minutes = value % 60;
+                return hours > 0 ? `${hours}u ${minutes}m` : `${minutes}m`;
+              },
             },
             grid: {
-              color: 'rgba(75, 85, 99, 0.3)',
+              color: "rgba(75, 85, 99, 0.3)",
             },
           },
           x: {
             ticks: {
-              color: 'rgba(156, 163, 175, 1)',
+              color: "rgba(156, 163, 175, 1)",
               maxRotation: 45,
               minRotation: 45,
             },
@@ -130,31 +137,35 @@ const createChart = async () => {
           },
         },
       },
-    })
+    });
   } catch (error) {
-    console.error('Error creating duration trends chart:', error)
+    console.error("Error creating duration trends chart:", error);
   }
-}
+};
 
-watch(() => props.workouts, () => {
-  if (process.client) {
-    nextTick(() => {
-      createChart()
-    })
-  }
-}, { immediate: true })
+watch(
+  () => props.workouts,
+  () => {
+    if (process.client) {
+      nextTick(() => {
+        createChart();
+      });
+    }
+  },
+  { immediate: true },
+);
 
 onMounted(() => {
   if (process.client) {
     nextTick(() => {
-      createChart()
-    })
+      createChart();
+    });
   }
-})
+});
 
 onUnmounted(() => {
   if (chart) {
-    chart.destroy()
+    chart.destroy();
   }
-})
-</script> 
+});
+</script>

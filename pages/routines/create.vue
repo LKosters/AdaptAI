@@ -1,7 +1,14 @@
 <template>
   <div>
     <div>
-      <BlockHero :link="{ link: '/routines', title: 'Alle routines', icon: 'line-md:arrow-left'}" title="Routine aanmaken" />
+      <BlockHero
+        :link="{
+          link: '/routines',
+          title: 'Alle routines',
+          icon: 'line-md:arrow-left',
+        }"
+        title="Routine aanmaken"
+      />
       <p class="text-lg font-bold mb-5">
         Wat voor een workout zou je willen doen?
       </p>

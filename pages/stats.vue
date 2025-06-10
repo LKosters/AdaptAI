@@ -1,22 +1,30 @@
 <template>
   <div>
-    <BlockHero :link="{ link: '/settings', title: 'Instellingen', icon: 'line-md:cog-filled'}" title="Statistieken" />
-    
+    <BlockHero
+      :link="{
+        link: '/settings',
+        title: 'Instellingen',
+        icon: 'line-md:cog-filled',
+      }"
+      title="Statistieken"
+    />
+
     <div v-if="isLoading" class="text-center py-8">
       <Icon name="line-md:loading-twotone-loop" class="!size-8" />
       <p class="mt-2">Statistieken laden...</p>
     </div>
-    
+
     <div v-else-if="!integrationStore.hevyApiKey" class="text-center py-8">
       <p class="text-gray-400">
-        Voeg eerst een Hevy API key toe in de instellingen om je statistieken te zien.
+        Voeg eerst een Hevy API key toe in de instellingen om je statistieken te
+        zien.
       </p>
     </div>
-    
+
     <div v-else-if="!allWorkouts?.workouts?.length" class="text-center py-8">
       <p class="text-gray-400">Geen workouts gevonden voor statistieken.</p>
     </div>
-    
+
     <div v-else class="space-y-8 mb-20">
       <!-- Workouts per week chart -->
       <div class="bg-[#282828]/70 p-6 rounded-[20px]">
@@ -35,9 +43,9 @@
       <div class="bg-[#282828]/70 p-6 rounded-[20px]">
         <h3 class="text-xl font-bold mb-4">Spiergroepen Verdeling</h3>
         <ClientOnly>
-          <UiGraphMuscleGroupsChart 
-            :workouts="allWorkouts.workouts" 
-            :exercise-templates="exerciseTemplates" 
+          <UiGraphMuscleGroupsChart
+            :workouts="allWorkouts.workouts"
+            :exercise-templates="exerciseTemplates"
           />
           <template #fallback>
             <div class="h-[200px] flex items-center justify-center">
@@ -51,9 +59,9 @@
       <div class="bg-[#282828]/70 p-6 rounded-[20px]">
         <h3 class="text-xl font-bold mb-4">Apparatuur Gebruik</h3>
         <ClientOnly>
-          <UiGraphEquipmentChart 
-            :workouts="allWorkouts.workouts" 
-            :exercise-templates="exerciseTemplates" 
+          <UiGraphEquipmentChart
+            :workouts="allWorkouts.workouts"
+            :exercise-templates="exerciseTemplates"
           />
           <template #fallback>
             <div class="h-[300px] flex items-center justify-center">
@@ -80,9 +88,9 @@
       <div class="bg-[#282828]/70 p-6 rounded-[20px]">
         <h3 class="text-xl font-bold mb-4">Meest Gebruikte Oefeningen</h3>
         <ClientOnly>
-          <UiGraphTopExercisesChart 
-            :workouts="allWorkouts.workouts" 
-            :exercise-templates="exerciseTemplates" 
+          <UiGraphTopExercisesChart
+            :workouts="allWorkouts.workouts"
+            :exercise-templates="exerciseTemplates"
           />
           <template #fallback>
             <div class="h-[400px] flex items-center justify-center">
@@ -106,20 +114,22 @@ const exerciseTemplates = ref<any>(null);
 // Computed properties
 const allWorkouts = computed(() => workoutsStore.recentWorkouts);
 const allRoutines = computed(() => routinesStore.routines);
-const isLoading = computed(() => workoutsStore.isLoading || routinesStore.isLoading);
+const isLoading = computed(
+  () => workoutsStore.isLoading || routinesStore.isLoading,
+);
 
 // Load exercise templates and fetch data
 onMounted(async () => {
   try {
-    exerciseTemplates.value = await $fetch('/workout_templates.json');
+    exerciseTemplates.value = await $fetch("/workout_templates.json");
   } catch (error) {
-    console.error('Error loading exercise templates:', error);
+    console.error("Error loading exercise templates:", error);
   }
-  
+
   // Fetch data
   await Promise.all([
     workoutsStore.fetchRecentWorkouts(),
-    routinesStore.fetchRoutines()
+    routinesStore.fetchRoutines(),
   ]);
 });
 </script>
