@@ -2,9 +2,9 @@ import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 import { useWorkoutsStore } from "./workouts";
 import { useRoutinesStore } from "./routines";
-import type { Ref } from 'vue'
+import type { Ref } from "vue";
 
-type MessageRole = any
+type MessageRole = any;
 
 export const useAICoachStore = defineStore("aiCoach", () => {
   const messages: Ref<any[]> = ref<any[]>([]);
@@ -18,7 +18,7 @@ export const useAICoachStore = defineStore("aiCoach", () => {
     messages.value.push({
       role,
       content,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   }
 
@@ -36,17 +36,17 @@ export const useAICoachStore = defineStore("aiCoach", () => {
   }
 
   const getWorkoutContext = computed(() => {
-    if (!workoutsStore.recentWorkouts) return '';
+    if (!workoutsStore.recentWorkouts) return "";
     return workoutsStore.recentWorkouts.workouts
-      .map(w => `Workout: ${w.title} (${w.start_time})`)
-      .join('\n');
+      .map((w) => `Workout: ${w.title} (${w.start_time})`)
+      .join("\n");
   });
 
   const getRoutineContext = computed(() => {
-    if (!routinesStore.routines) return '';
+    if (!routinesStore.routines) return "";
     return routinesStore.routines.routines
-      .map(r => `Routine: ${r.title} (${r.exercises.length} exercises)`)
-      .join('\n');
+      .map((r) => `Routine: ${r.title} (${r.exercises.length} exercises)`)
+      .join("\n");
   });
 
   return {
@@ -58,6 +58,6 @@ export const useAICoachStore = defineStore("aiCoach", () => {
     setError,
     setLoading,
     getWorkoutContext,
-    getRoutineContext
+    getRoutineContext,
   };
 });

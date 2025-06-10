@@ -6,17 +6,23 @@
 
 <script lang="ts" setup>
 interface Props {
-  workouts: any[]
-  exerciseTemplates: any
+  workouts: any[];
+  exerciseTemplates: any;
 }
 
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 
-const chartCanvas = ref<HTMLCanvasElement | null>(null)
-let chart: any = null
+const chartCanvas = ref<HTMLCanvasElement | null>(null);
+let chart: any = null;
 
 const createChart = async () => {
-  if (!process.client || !chartCanvas.value || !props.workouts?.length || !props.exerciseTemplates) return
+  if (
+    !process.client ||
+    !chartCanvas.value ||
+    !props.workouts?.length ||
+    !props.exerciseTemplates
+  )
+    return;
 
   try {
     const {
@@ -28,7 +34,7 @@ const createChart = async () => {
       Title,
       Tooltip,
       Legend,
-    } = await import('chart.js')
+    } = await import("chart.js");
 
     Chart.register(
       CategoryScale,
@@ -38,51 +44,54 @@ const createChart = async () => {
       Title,
       Tooltip,
       Legend,
-    )
+    );
 
-    const exerciseCounts: { [key: string]: number } = {}
-    
-    const exerciseMap: { [key: string]: any } = {}
+    const exerciseCounts: { [key: string]: number } = {};
+
+    const exerciseMap: { [key: string]: any } = {};
     props.exerciseTemplates.exercise_templates?.forEach((template: any) => {
-      exerciseMap[template.id] = template
-    })
+      exerciseMap[template.id] = template;
+    });
 
     props.workouts.forEach((workout: any) => {
       if (workout.exercises) {
         workout.exercises.forEach((exercise: any) => {
-          const template = exerciseMap[exercise.exercise_template_id]
+          const template = exerciseMap[exercise.exercise_template_id];
           if (template) {
-            exerciseCounts[template.title] = (exerciseCounts[template.title] || 0) + 1
+            exerciseCounts[template.title] =
+              (exerciseCounts[template.title] || 0) + 1;
           }
-        })
+        });
       }
-    })
+    });
 
     const sortedExercises = Object.entries(exerciseCounts)
-      .sort(([,a], [,b]) => b - a)
-      .slice(0, 10)
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, 10);
 
     if (chart) {
-      chart.destroy()
+      chart.destroy();
     }
 
-    const ctx = chartCanvas.value.getContext('2d')
-    if (!ctx) return
+    const ctx = chartCanvas.value.getContext("2d");
+    if (!ctx) return;
 
     chart = new Chart(ctx, {
-      type: 'bar',
+      type: "bar",
       data: {
         labels: sortedExercises.map(([name]) => name),
-        datasets: [{
-          label: 'Gebruik',
-          data: sortedExercises.map(([, count]) => count),
-          backgroundColor: '#8b5cf6',
-          borderColor: '#7c3aed',
-          borderWidth: 1,
-        }],
+        datasets: [
+          {
+            label: "Gebruik",
+            data: sortedExercises.map(([, count]) => count),
+            backgroundColor: "#8b5cf6",
+            borderColor: "#7c3aed",
+            borderWidth: 1,
+          },
+        ],
       },
       options: {
-        indexAxis: 'y',
+        indexAxis: "y",
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
@@ -90,10 +99,10 @@ const createChart = async () => {
             display: false,
           },
           tooltip: {
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            titleColor: 'white',
-            bodyColor: 'white',
-            borderColor: '#8b5cf6',
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
+            titleColor: "white",
+            bodyColor: "white",
+            borderColor: "#8b5cf6",
             borderWidth: 1,
           },
         },
@@ -102,15 +111,15 @@ const createChart = async () => {
             beginAtZero: true,
             ticks: {
               stepSize: 1,
-              color: 'rgba(156, 163, 175, 1)',
+              color: "rgba(156, 163, 175, 1)",
             },
             grid: {
-              color: 'rgba(75, 85, 99, 0.3)',
+              color: "rgba(75, 85, 99, 0.3)",
             },
           },
           y: {
             ticks: {
-              color: 'rgba(156, 163, 175, 1)',
+              color: "rgba(156, 163, 175, 1)",
               font: {
                 size: 11,
               },
@@ -121,31 +130,35 @@ const createChart = async () => {
           },
         },
       },
-    })
+    });
   } catch (error) {
-    console.error('Error creating top exercises chart:', error)
+    console.error("Error creating top exercises chart:", error);
   }
-}
+};
 
-watch([() => props.workouts, () => props.exerciseTemplates], () => {
-  if (process.client) {
-    nextTick(() => {
-      createChart()
-    })
-  }
-}, { immediate: true })
+watch(
+  [() => props.workouts, () => props.exerciseTemplates],
+  () => {
+    if (process.client) {
+      nextTick(() => {
+        createChart();
+      });
+    }
+  },
+  { immediate: true },
+);
 
 onMounted(() => {
   if (process.client) {
     nextTick(() => {
-      createChart()
-    })
+      createChart();
+    });
   }
-})
+});
 
 onUnmounted(() => {
   if (chart) {
-    chart.destroy()
+    chart.destroy();
   }
-})
-</script> 
+});
+</script>
