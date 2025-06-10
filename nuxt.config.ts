@@ -1,3 +1,5 @@
+import { defineNuxtConfig } from 'nuxt/config'
+import type { NuxtConfig } from '@nuxt/schema'
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
@@ -22,5 +24,6 @@ export default defineNuxtConfig({
   plugins: [{ src: "~/plugins/firebase.client.js", mode: "client" }],
   runtimeConfig: {
     hevyAPIEndpoint: process.env.HEVY_API_ENDPOINT,
+    openaiApiKey: process.env.OPENAI_API_KEY
   },
-});
+} satisfies NuxtConfig)
