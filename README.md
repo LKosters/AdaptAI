@@ -67,4 +67,4 @@ NUXT_CLERK_SECRET_KEY=your_clerk_sercret_key
 - `plugins/` - Nuxt plugins
 - `public/` - Public static files
 - `server/` - Server-side code
-- `stores/` - Pinia stores 
+- `stores/` - Pinia stores

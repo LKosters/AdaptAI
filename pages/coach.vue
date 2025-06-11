@@ -10,10 +10,10 @@
     />
 
     <!-- Chat Container -->
-    <div class="bg-[#282828]/70 rounded-[20px] overflow-hidden">
+    <div class="rounded-[20px] overflow-hidden">
       <!-- Messages Area -->
       <div
-        class="h-[calc(100vh-300px)] min-h-[400px] overflow-y-auto p-4 space-y-3"
+        class="h-[calc(100vh-400px)] min-h-[400px] overflow-y-auto space-y-3"
         ref="chatContainer"
       >
         <template v-if="aiCoachStore.messages.length === 0">
@@ -36,16 +36,16 @@
           >
             <div
               :class="[
-                'max-w-[85%] rounded-[20px] p-4',
+                'max-w-[85%] rounded-[20px] p-4 user-icon',
                 message.role === 'user'
                   ? 'bg-primary text-black font-medium'
-                  : 'bg-[#1E1E1E] text-white',
+                  : 'bg-[#282828]/70 text-white',
               ]"
             >
               <div class="flex items-start gap-2">
                 <Icon
                   v-if="message.role === 'assistant'"
-                  name="line-md:ai"
+                  name="line-md:account"
                   class="!size-5 mt-1 flex-shrink-0"
                 />
                 <div class="break-words">{{ message.content }}</div>
@@ -56,8 +56,8 @@
       </div>
 
       <!-- Input Area -->
-      <div class="border-t border-[#3E3E3E] p-4">
-        <form @submit.prevent="sendMessage" class="flex gap-2">
+      <div class="">
+        <form @submit.prevent="sendMessage" class="flex gap-2 my-2">
           <input
             v-model="userMessage"
             type="text"
@@ -217,5 +217,10 @@ const sendMessage = async (): Promise<void> => {
 .overflow-y-auto {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+.user-icon svg path {
+  stroke: #fff !important;
+  fill: #fff !important;
 }
 </style>
